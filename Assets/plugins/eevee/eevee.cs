@@ -91,7 +91,11 @@ namespace eevee {
             return inject.retrieve().Check(input);
         }
 
-        public static int CheckAxis(string negative, string positive) {
+        public static bool Grab(string input) {
+            return inject.retrieve().Grab(input);
+        }
+
+        public static int CheckAxis(string positive, string negative) {
             return input.Check(positive)?1:input.Check(negative)?-1:0;
         }
     }
@@ -169,6 +173,8 @@ public class eev : MonoBehaviour {
     public Dictionary<string, eevee.config> FullConfig = new Dictionary<string, eevee.config>();
     public Dictionary<string, Coroutine> activeCoroutines = new Dictionary<string, Coroutine>();
 
+    public Dictionary<string, Coroutine> activeCoroutines_grab = new Dictionary<string, Coroutine>();
+
     public List<ButtonControl> current_pressed_buttons = new List<ButtonControl>();
     public List<string> current_pressed_names = new List<string>();
 
@@ -179,6 +185,24 @@ public class eev : MonoBehaviour {
             } else {
                 return false;
             }
+        } else {
+            return false;
+        }
+    }
+
+    public bool Grab(string input){
+        if (FullConfig.ContainsKey(input)) {
+
+            if (activeCoroutines_grab.ContainsKey(input) && activeCoroutines_grab[input] != null){
+                return false;
+            } else if (Check(input)) {
+                activeCoroutines_grab[input] = StartCoroutine(Track_Grab(input));
+                
+                return true;
+            }
+
+            return false;
+
         } else {
             return false;
         }
@@ -228,6 +252,16 @@ public class eev : MonoBehaviour {
 
             delay = Mathf.Max(minDelay, delay / 2);
             yield return new WaitForSeconds(delay);
+        }
+    }
+
+    private IEnumerator Track_Grab(string keyName) {
+        while (true) {
+            if (!(Input.GetKey((KeyCode)FullConfig[keyName].KEYBOARD_code) || IsControllerInputPressed(FullConfig[keyName].CONTROLLER_name))) {
+                activeCoroutines_grab.Remove(keyName);
+                yield break;
+            }
+            yield return 0;
         }
     }
 

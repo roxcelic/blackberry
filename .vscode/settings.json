@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "the meta menaces.sln"
+    "dotnet.defaultSolution": "menace on my meta.sln"
 }

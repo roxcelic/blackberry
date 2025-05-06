@@ -57,7 +57,15 @@ public class controlInjector : MonoBehaviour {
                 KEYBOARD_code = (int)KeyCode.Escape,
                 CONTROLLER_name = "Start"
             }
-        }
+        },
+        // debug
+        {
+            "reset", new eevee.config {
+                displayName = "reset",
+                KEYBOARD_code = (int)KeyCode.R,
+                CONTROLLER_name = "A"
+            }
+        },
     };
     
     void Start() {

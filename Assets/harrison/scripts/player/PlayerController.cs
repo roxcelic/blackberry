@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
     private float startz;
 
 
-    protected virtual void Start() {
+    protected virtual void OnEnable() {
         playerSpeed = 5.0f;
         controller = GetComponent<CharacterController>();
 
@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     protected virtual void FixedUpdate() {
-        float Horizontal = eevee.input.CheckAxis("left", "right");
-        float Vertical = eevee.input.CheckAxis("down", "up");
+        float Horizontal = eevee.input.CheckAxis("right", "left");
+        float Vertical = eevee.input.CheckAxis("up", "down");
 
         // a diagonal direction speed fix
         if (Horizontal != 0f && Vertical != 0f){

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5132331803132475814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1979847066688892530}
+  - component: {fileID: 7595025212185016505}
+  m_Layer: 0
+  m_Name: betterWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1979847066688892530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5132331803132475814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.638268, y: 8.919655, z: 46.33842}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7595025212185016505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5132331803132475814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b258be54449ce6d4db74eddf3b8d9c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start: 0
+  generated: 0
+  seed: ffffff
+  floor: 0
+  room: 0
+  floors:
+  - {fileID: 6045188658328113593, guid: 6826e1229eea87740af4d8c9d5b16c72, type: 3}
+  roofs:
+  - {fileID: 6629252634004282254, guid: 19687bd2f3143334c9cf5ef1006eae04, type: 3}
+  walls:
+  - {fileID: 4941838640774223422, guid: 39a61277397c4b84a8f05ac52147551c, type: 3}
+  wallsansdoor:
+  - {fileID: 4941838640774223422, guid: e6820946423e90d4db531f93e2f8a185, type: 3}
+  decors:
+  - {fileID: 5748417286517215073, guid: d5daf7c23c7549943b9b14fad8ea9b78, type: 3}
+  - {fileID: 3597621901499609115, guid: 1e70f35431c9ce44c807af43e01c2f78, type: 3}
+  - {fileID: 2379874982016559004, guid: e310167aa4b948c469d08c2af20865a3, type: 3}
+  - {fileID: 4333482975142188262, guid: e1a89734ff3ec894a81c25db215e0773, type: 3}
+  - {fileID: 6172258477605051330, guid: 7914740c013a99947be7661cd6b20017, type: 3}
+  width: 0.25
+  height: 0.1
+  scale: 100
+  worldscale: 0
+  safeborder: 5
+  StartRoom: 0
+  EndRoom: 0
+  player: {fileID: 364097720074593624, guid: 4d322e4ccef98d44a8c310726a8c0074, type: 3}
