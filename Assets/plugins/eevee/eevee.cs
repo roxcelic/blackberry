@@ -55,6 +55,12 @@ namespace eevee {
             Qlock.push();
         }
 
+        public static void OverWrite(eevee.config config) {
+            eev eevee = retrieve();
+            eevee.FullConfig[config.displayName] = config;
+            Qlock.push();
+        }
+
         public static void add(eevee.config config) {
             eev eevee = retrieve();
             eevee.FullConfig[config.displayName] = config;
@@ -71,7 +77,14 @@ namespace eevee {
         }
 
         public static eev retrieve() {
-            eev eevee = GameObject.Find(var.name).GetComponent<eev>();
+            // make this make the object if null
+            GameObject eeveeOBJ = GameObject.Find(var.name);
+            if (eeveeOBJ == null){
+                inject.Parasite();
+                eeveeOBJ = GameObject.Find(var.name);
+            }
+
+            eev eevee = eeveeOBJ.GetComponent<eev>();
             return eevee;
         }
     }
@@ -98,11 +111,19 @@ namespace eevee {
         public static int CheckAxis(string positive, string negative) {
             return input.Check(positive)?1:input.Check(negative)?-1:0;
         }
+
+        public static int CollectAxis(string positive, string negative) {
+            return input.Collect(positive)?1:input.Collect(negative)?-1:0;
+        }
     }
 
     // config lock
     //  eevee.Qlock.push();
     public class Qlock {
+        static Qlock() {
+            inject.Parasite();
+        }
+
         public static string wrap(Dictionary<string, eevee.config> FullConfig) {
             List<KeyValue> keyValueList = new List<KeyValue>();
 
@@ -130,7 +151,9 @@ namespace eevee {
         public static void push() {
             Dictionary<string, eevee.config> FullConfig = inject.retrieve().FullConfig;
 
+            Debug.Log("saving config...");
             File.WriteAllText(var.ConfPath, wrap(FullConfig));
+            Debug.Log("config saved.");
         }
 
         public static Dictionary<string, eevee.config> extractr() {

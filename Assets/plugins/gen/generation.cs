@@ -65,18 +65,17 @@ namespace generation {
         
         public static int randomIndex(int length, int choice, long seed) {
             string stringseed = seed.ToString();
-            
-            // generate a number between 0 and 17 based on the seed
-            int index = (int)utils.charToFloat(stringseed[choice]);
-            float val = utils.charToFloat(stringseed[index]) + utils.charToFloat(stringseed[opositeIndex(index, seed)]);
 
-            float percentagemultiplier = length / 18f;
+            string combined = stringseed + choice.ToString();
+            int hash = combined.GetHashCode();
 
-            int returnedindex = (int)Mathf.Clamp(val * percentagemultiplier, 1, length);
+            hash = Math.Abs(hash);
 
-            // returns the index
-            return returnedindex;
+            int index = hash % length;
+
+            return index;
         }
+
     }
 
     public class seed {
@@ -100,6 +99,8 @@ namespace generation {
 
             trueSeed = (start > 5 ? (seed - expand) : (seed + expand));
 
+            if (trueSeed > 999999999999) trueSeed = 999999999999;
+            
             return (long)trueSeed;
         }
 
@@ -111,6 +112,8 @@ namespace generation {
             double trueSeed = 0.0;
 
             trueSeed = (start > 5 ? (seed - expand) : (seed + expand));
+
+            if (trueSeed > 999999999999) trueSeed = 999999999999;
 
             return (long)trueSeed;
         }
