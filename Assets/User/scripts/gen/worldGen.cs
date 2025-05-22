@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class worldGen : MonoBehaviour {
     public GameObject room;
+    public GameObject Player;
     public bool experement;
     public GameObject loadingMenu;
     public GameObject KillBox;

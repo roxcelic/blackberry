@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 using System;
 using System.Collections;
@@ -36,13 +35,17 @@ public class EnemySpawn : MonoBehaviour {
             }
 
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            players[0].GetComponent<PlayerController>().room+=1;
 
-            if (GetRoomCount() - 1< players[0].GetComponent<PlayerController>().room) {
-                StartCoroutine(loadNextFloor());
-            } else {
-                Destroy(transform.gameObject);
-                transform.parent.parent.GetChild(transform.parent.GetSiblingIndex() + 1).Find("enemys").GetComponent<EnemySpawn>().DoTheRoar();
+            if (players.Length != 0) {
+                players[0].GetComponent<PlayerController>().room+=1;
+
+                if (GetRoomCount() - 1< players[0].GetComponent<PlayerController>().room) {    
+                    GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("powerups").gameObject;
+                    loadingScreen.SetActive(true);
+                } else {
+                    Destroy(transform.gameObject);
+                    transform.parent.parent.GetChild(transform.parent.GetSiblingIndex() + 1).Find("enemys").GetComponent<EnemySpawn>().DoTheRoar();
+                }
             }
         }
     }
@@ -77,27 +80,4 @@ public class EnemySpawn : MonoBehaviour {
 
         activated = true;
     }
-
-    public IEnumerator loadNextFloor() {
-        if (changingFloor) yield break;
-    
-        changingFloor = true;
-        
-        PlayerPrefs.SetInt("floor", PlayerPrefs.GetInt("floor", 0) + 1);
-
-        GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("loadingScreen").gameObject;
-
-        loadingScreen.SetActive(true);
-        loadingScreen.GetComponent<Animator>().Play("loadingScreenEntrence");
-
-        AnimatorStateInfo currentStateInfo = loadingScreen.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
-        float animLength = currentStateInfo.length;
-
-        yield return new WaitForSeconds(animLength);
-
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-        
-    }
-
 }

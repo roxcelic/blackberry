@@ -6159,8 +6159,8 @@ MonoBehaviour:
   canMove: 1
   center: 1
   canReturn: 1
-  returnMenu: {fileID: 0}
-  sceneCamera: {fileID: 0}
+  returnMenu: {fileID: 1490267374}
+  sceneCamera: {fileID: 331014465}
   MaxX: 0
   MaxY: 0
 --- !u!4 &1561934031

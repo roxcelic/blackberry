@@ -210,6 +210,8 @@ public class ImprovedGeneration : MonoBehaviour {
 
                 roomConfig.player = Instantiate(player, transform);
                 roomConfig.player.transform.position = (roomConfig.floor.transform.position + new Vector3(0, 1, 0));
+
+                transform.parent.GetComponent<worldGen>().Player = roomConfig.player;
             } else {
                 roomConfig.walls.West = SpawnObject(wallsansdoor, 1, new Vector3(-90f, 0f, 0f), new Vector3(0, 0, 0), "west");
             } 

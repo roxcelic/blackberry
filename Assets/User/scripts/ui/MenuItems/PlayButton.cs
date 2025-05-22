@@ -11,6 +11,7 @@ public class PlayButton : MenuItems {
 
     protected override void Action() {
         PlayerPrefs.SetInt("worldType", WorldType);
+        PlayerPrefs.SetString("powerups", "");
 
         StartCoroutine(loadworld());
     }

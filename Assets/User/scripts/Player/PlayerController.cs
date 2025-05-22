@@ -2,6 +2,7 @@ using UnityEngine;
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour {
@@ -47,8 +48,8 @@ public class PlayerController : MonoBehaviour {
     public float maxHealth;
     public float health;
     public float GuardModifier;
-    public int speed;
-    public int defence;
+    public float speed;
+    public float defence;
 
     // cashs
         // movement smoothing
@@ -56,6 +57,10 @@ public class PlayerController : MonoBehaviour {
 
     // states
     private float lastAnim;
+
+    // powerups
+    [Header("powerUps")]
+    public List<string> act;
 
     protected virtual void OnEnable() {
         transform.GetChild(transform.childCount - 1).GetComponent<attackrest>().damage = baseAttackDamage;
@@ -73,6 +78,18 @@ public class PlayerController : MonoBehaviour {
 
         // coroutines
         StartCoroutine(Recover());
+
+        // powerups
+        string[] powerupsHOLD = PlayerPrefs.GetString("powerups", "").Split(",");
+        
+        foreach (string powerup in powerupsHOLD) {
+            if (powerup != ""){
+                act.Add(powerup);
+                
+                if (powerups.full.act.ContainsKey(powerup))
+                    powerups.full.act[powerup].action(this);
+            }
+        }
     }
 
     protected virtual void Update() {
