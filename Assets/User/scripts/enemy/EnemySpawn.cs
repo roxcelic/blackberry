@@ -40,6 +40,7 @@ public class EnemySpawn : MonoBehaviour {
                 players[0].GetComponent<PlayerController>().room+=1;
 
                 if (GetRoomCount() - 1< players[0].GetComponent<PlayerController>().room) {    
+                    Time.timeScale = 1f;
                     GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("powerups").gameObject;
                     loadingScreen.SetActive(true);
                 } else {
@@ -67,14 +68,17 @@ public class EnemySpawn : MonoBehaviour {
         yield return new WaitForSeconds(1);
 
         foreach (GameObject bean in enemys){
-            GameObject newBean = Instantiate(bean, bean.transform.position, bean.transform.rotation);
+            GameObject newBean = Instantiate(bean);
+            newBean.transform.parent = transform;
 
             Bounds bounds = col.bounds;
 
-            newBean.transform.position = new Vector3(
-                UnityEngine.Random.Range(bounds.min.x + safeborder, bounds.max.x - safeborder),
-                10,
-                UnityEngine.Random.Range(bounds.min.z + safeborder, bounds.max.z - safeborder)
+            newBean.transform.position = Vector3.zero;
+
+            newBean.transform.localPosition = new Vector3(
+                0,
+                1,
+                0
             );
         }
 

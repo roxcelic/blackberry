@@ -274,7 +274,7 @@ public class eev : MonoBehaviour {
             }
 
             delay = Mathf.Max(minDelay, delay / 2);
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSecondsRealtime(delay);
         }
     }
 

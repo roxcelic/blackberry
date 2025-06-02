@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour {
@@ -22,6 +25,8 @@ public class PlayerController : MonoBehaviour {
     public Rigidbody rb;
     public GameObject attackComp;
     public Animator anim;
+    public TMP_InputField commandBar;
+    public GameObject commandHolder;
 
     [Header("attack")]
     public bool hit;
@@ -86,8 +91,8 @@ public class PlayerController : MonoBehaviour {
             if (powerup != ""){
                 act.Add(powerup);
                 
-                if (powerups.full.act.ContainsKey(powerup))
-                    powerups.full.act[powerup].action(this);
+                if (powerups.full.truePowerups().ContainsKey(powerup))
+                    powerups.full.truePowerups()[powerup].action(this);
             }
         }
     }
@@ -105,6 +110,9 @@ public class PlayerController : MonoBehaviour {
         
         if (eevee.input.Collect("attack"))
             Attack();
+
+        if (eevee.input.Collect("commandBarOpen"))
+            openCommandBar();
 
         if (eevee.input.Check("guard"))
             guarding = true;
@@ -148,8 +156,16 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void openCommandBar() {
+        if (!commandHolder.activeSelf){
+            Time.timeScale = 0f;
+            commandHolder.SetActive(true);
+            commandBar.ActivateInputField();
+        }
+    }
+
     void Attack() {
-        if (BaseAttackStamina >= BaseAttackCost){
+        if (BaseAttackStamina >= BaseAttackCost && !attackComp.activeSelf){
             attackComp.SetActive(true);
             BaseAttackStamina-=BaseAttackCost;
         }

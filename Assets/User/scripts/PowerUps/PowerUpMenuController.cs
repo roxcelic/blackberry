@@ -44,6 +44,11 @@ public class PowerUpMenuController : MonoBehaviour {
 
     void OnEnable() {
         Debug.Log("loading power ups");
+        
+        Debug.Log(PlayerPrefs.GetString("powerups", ""));
+        foreach (string key in powerups.full.truePowerups().Keys)
+            Debug.Log(key);
+
         transform.GetComponent<Animator>().Play("fade-in-powerups");
         
         World.Player.SetActive(false);
@@ -53,7 +58,7 @@ public class PowerUpMenuController : MonoBehaviour {
         foreach (string powerup in PlayerPrefs.GetString("powerups", "").Split(","))
             if (powerup != "") currentPowerUps.Add(powerup);
 
-        Dictionary<string, powerups.PowerUp> PossiblePowerUps = powerups.full.act;
+        Dictionary<string, powerups.PowerUp> PossiblePowerUps = powerups.full.truePowerups();
 
         foreach (string key in currentPowerUps)
             PossiblePowerUps.Remove(key);
@@ -70,7 +75,7 @@ public class PowerUpMenuController : MonoBehaviour {
 
             powerups.PowerUp currentPu;
             string PUkey = powerupKeys[UnityEngine.Random.Range(0, powerupKeys.Count - 1)];
-            currentPu = powerups.full.act[PUkey];
+            currentPu = powerups.full.truePowerups()[PUkey];
             currentPu.Name = PUkey;
             SelectedPowerUps.Add(currentPu);
             powerupKeys.Remove(PUkey);

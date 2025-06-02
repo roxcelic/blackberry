@@ -90,7 +90,7 @@ public class MainMenace : MonoBehaviour {
     }
 
     void Attack() {
-        if (BaseAttackStamina >= BaseAttackCost){
+        if (BaseAttackStamina >= BaseAttackCost && !attackComp.activeSelf){
             attackComp.SetActive(true);
             BaseAttackStamina-=BaseAttackCost;
         }
