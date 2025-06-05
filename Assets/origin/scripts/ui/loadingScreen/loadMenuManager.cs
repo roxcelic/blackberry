@@ -7,4 +7,7 @@ public class loadMenuManager : MonoBehaviour {
     public void Enable() {
         gameObject.SetActive(true);
     }
+    public void SetTimeScale(float time){
+        Time.timeScale = time;
+    }
 }

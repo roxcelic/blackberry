@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     public Animator anim;
     public TMP_InputField commandBar;
     public GameObject commandHolder;
+    public GameObject pauseMenu;
 
     [Header("attack")]
     public bool hit;
@@ -110,6 +111,10 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
+        // dont do anything while paused
+        if (Time.timeScale == 0)
+            return;
+
         // health fix
         if (health > maxHealth)
             health = maxHealth;
@@ -127,8 +132,11 @@ public class PlayerController : MonoBehaviour {
         if (eevee.input.Collect("attack"))
             Attack();
 
-        if (eevee.input.Collect("commandBarOpen"))
+        if (eevee.input.Collect("commandBarOpen") && PlayerPrefs.GetString("dev", "false") == "true")
             openCommandBar();
+        
+        if (eevee.input.Collect("pause"))
+            openPauseMenu();
 
         if (eevee.input.Check("guard"))
             guarding = true;
@@ -177,6 +185,13 @@ public class PlayerController : MonoBehaviour {
             Time.timeScale = 0f;
             commandHolder.SetActive(true);
             commandBar.ActivateInputField();
+        }
+    }
+
+    void openPauseMenu() {
+        if (!pauseMenu.activeSelf) {
+            pauseMenu.SetActive(true);
+            pauseMenu.GetComponent<Animator>().Play("pauseMenuRise");
         }
     }
 
