@@ -30,7 +30,7 @@ public class attackrest : MonoBehaviour {
                 break;
             case "enemy":
                 target.GetComponent<MainMenace>().Damage(damage);
-                transform.parent.GetComponent<PlayerController>().Heal(damage / 4f);
+                transform.parent.GetComponent<PlayerController>().health +=  damage * transform.parent.GetComponent<PlayerController>().healModifier;
 
                 break;
         }

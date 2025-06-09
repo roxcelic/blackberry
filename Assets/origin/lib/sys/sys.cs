@@ -47,6 +47,13 @@ namespace sys {
                     }
                 },
                 {
+                    "dash", new eevee.config {
+                        displayName = "dash",
+                        KEYBOARD_code = (int)KeyCode.X,
+                        CONTROLLER_name = "Right Trigger"
+                    }
+                },
+                {
                     "attack", new eevee.config {
                         displayName = "attack",
                         KEYBOARD_code = (int)KeyCode.Return,

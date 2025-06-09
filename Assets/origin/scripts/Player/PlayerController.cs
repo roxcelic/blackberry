@@ -54,11 +54,18 @@ public class PlayerController : MonoBehaviour {
 
     public float maxHealth;
     public float health;
+    public float healModifier = .25f;
     public float GuardModifier;
     public float speed;
     public float defence;
 
     public bool dead;
+
+    [Header("extra")]
+    // dash
+    public bool dash;
+    public bool dashing = false;
+    [SerializeField] public float dashForceModifier = 5f;
 
     // cashs
         // movement smoothing
@@ -90,13 +97,19 @@ public class PlayerController : MonoBehaviour {
 
         // powerups
         string[] powerupsHOLD = PlayerPrefs.GetString("powerups", "").Split(",");
+        foreach (string key in powerups.full.truePowerups().Keys) Debug.Log(key);
         
         foreach (string powerup in powerupsHOLD) {
+            Debug.Log(powerup);
+
             if (powerup != ""){
                 act.Add(powerup);
                 
-                if (powerups.full.truePowerups().ContainsKey(powerup))
+                if (powerups.full.truePowerups().ContainsKey(powerup)) {
+                    Debug.Log($"applying {powerup}");
                     powerups.full.truePowerups()[powerup].action(this);
+                    Debug.Log($"applied {powerup}");
+                }
             }
         }
     }
@@ -137,6 +150,9 @@ public class PlayerController : MonoBehaviour {
         
         if (eevee.input.Collect("pause"))
             openPauseMenu();
+
+        if (dash && eevee.input.Collect("dash"))
+            Dash();
 
         if (eevee.input.Check("guard"))
             guarding = true;
@@ -211,6 +227,15 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void Dash() {
+        if (dashing) return;
+
+        dashing = true;
+        Vector3 dashForce = new Vector3(Force.x * dashForceModifier, rb.linearVelocity.y, Force.y * dashForceModifier);
+        rb.AddForce(dashForce, ForceMode.Impulse);
+        StartCoroutine(Dashing());
+    }
+
     public void Damage(float damage) {
         if (guarding)
             health -= (damage / (1 + (defence / 50)) / GuardModifier);
@@ -221,13 +246,6 @@ public class PlayerController : MonoBehaviour {
             Die();
     }
 
-    public void Heal(float health) {
-        health += health;
-
-        if (health >= maxHealth)
-            health = maxHealth;
-    }
-    
     // ienumerators
     public void UnSmooth(float duration){
         SmoothMovement = false;
@@ -250,5 +268,9 @@ public class PlayerController : MonoBehaviour {
 
             yield return new WaitForSeconds(0.5f);
         }
+    }
+    public IEnumerator Dashing(){
+        yield return new WaitForSeconds(0.5f);
+        dashing = false;
     }
 }

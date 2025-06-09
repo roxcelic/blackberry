@@ -21,7 +21,26 @@ namespace powerups {
         };
 
         public static Dictionary<string, powerups.PowerUp> act = new Dictionary<string, powerups.PowerUp> {
+        };
 
+        public static Dictionary<string, powerups.PowerUp> basis = new Dictionary<string, powerups.PowerUp> {
+            ["marmot power"] = new powerups.PowerUp{
+                Description = "doubles the rate at which you heal",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    controller.healModifier *= 2;
+                }
+            },
+            ["girl power"] = new powerups.PowerUp{
+                Description = "gives you a dash and sets the dash force to 50f",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    controller.dash = true;
+                    controller.dashForceModifier = 50f;
+                }
+            }
         };
 
         public static Dictionary<string, powerups.PowerUp> act2 = new Dictionary<string, powerups.PowerUp> {
@@ -122,6 +141,14 @@ namespace powerups {
                     controller.health = 25f;
                 }
             },
+            ["TimeDevice"] = new powerups.PowerUp{
+                Description = "slows down time",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    Time.timeScale = 0.5f;
+                }
+            },
 
 
             
@@ -186,15 +213,18 @@ namespace powerups {
 
 
         public static Dictionary<string, powerups.PowerUp> truePowerups(){
-            Dictionary<string, powerups.PowerUp> working_ref = act;
+            Dictionary<string, powerups.PowerUp> working_ref = full.act;
+
+            foreach(string key in basis.Keys)
+                working_ref[key] = basis[key];
 
             if (PlayerPrefs.GetString("expandedPowerUp", "false") == "true")
                 foreach(string key in fun.Keys)
-                    act[key] = fun[key];
+                    working_ref[key] = fun[key];
             
             if (PlayerPrefs.GetInt("powerupMode", 0) == 0)
                 foreach(string key in act2.Keys)
-                    act[key] = act2[key];
+                    working_ref[key] = act2[key];
 
             return working_ref;
         }

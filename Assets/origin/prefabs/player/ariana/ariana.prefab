@@ -2960,7 +2960,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7238305402874162457}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bc372c70b6c16f14ea9e73fb3613a60a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -3016,10 +3016,13 @@ MonoBehaviour:
   room: 0
   maxHealth: 100
   health: 0
+  healModifier: 0.25
   GuardModifier: 2
   speed: 0
   defence: 10
   dead: 0
+  dash: 0
+  dashForceModifier: 50
   act: []
   ariana_attack: {fileID: 3308977584353669846, guid: ccf429dcfb2323eb2a5784ed979cd900, type: 3}
   attackForce: 25

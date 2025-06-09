@@ -56,6 +56,8 @@ MonoBehaviour:
   - skull
   - speedPotion
   - thresh
+  - girl power
+  - marmot power
   iconIcons:
   - {fileID: 21300000, guid: 32c0bb89ab9ecfe4fb53579554a10361, type: 3}
   - {fileID: 21300000, guid: a136a2a65ed0b2747a7489c96d2d77f5, type: 3}
@@ -68,3 +70,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 57567921caed6d34f9aa4a948441cbfc, type: 3}
   - {fileID: 21300000, guid: f78654388545e274983da963a6a14a5c, type: 3}
   - {fileID: 21300000, guid: b2cef78c58ab78a4aa2a2f66cfc35e63, type: 3}
+  - {fileID: 21300000, guid: c0cd9cef2d45bd246a0573b15d198e97, type: 3}
+  - {fileID: 21300000, guid: 580670efabc54a34bbc8454cce96534b, type: 3}
