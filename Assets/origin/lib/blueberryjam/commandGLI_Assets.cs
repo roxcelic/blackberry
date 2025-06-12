@@ -59,6 +59,17 @@ namespace commandGLI_Assets {
                     commandGLI.utils.Log(input);
                 },
             },
+            ["god"] = new commandGLI.command {
+                Description = "god",
+                Help = "god",
+                Useage = "god // god()",
+
+                action = (string input, string fullCommand) => {
+                    commandGLI.utils.GetPlayer().maxHealth = 1000;
+                    commandGLI.utils.GetPlayer().health = 1000;
+                    commandGLI.utils.GetPlayer().speed = 150;
+                },
+            },
             ["clear"] = new commandGLI.command {
                 Description = "clears the terminal",
                 Help = "clears the terminal",

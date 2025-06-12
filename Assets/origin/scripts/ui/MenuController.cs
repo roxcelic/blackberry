@@ -34,6 +34,9 @@ public class MenuController : MonoBehaviour {
     private Dictionary<string, eevee.config> Controls;
 
     void Start() {
+        //reset time
+        Time.timeScale = 1f;
+
         MaxY = transform.childCount - 1;
         MaxX = transform.GetChild(SelectedY).childCount - 1;
     

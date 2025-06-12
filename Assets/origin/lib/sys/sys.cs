@@ -169,4 +169,10 @@ namespace sys {
                 }
             };
     }
+
+    public static class math {
+        public static float hyp(Vector2 input) {
+            return Mathf.Sqrt(Mathf.Pow(input.x, 2) + Mathf.Pow(input.y, 2));
+        }
+    }
 }

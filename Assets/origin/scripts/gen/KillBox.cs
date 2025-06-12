@@ -23,8 +23,11 @@ public class KillBox : MonoBehaviour {
                 break;
             case "Player":
                 PlayerController player = chosenOne.GetComponent<PlayerController>();
-                player.Damage(player.health / 4);
-                
+                float damage = player.health / 4;
+                damage = Mathf.Clamp(damage, player.maxHealth / 10, player.maxHealth);
+
+                player.Damage(damage);
+
                 if (world.transform.childCount-1 >= player.room)
                     chosenOne.transform.position = world.transform.GetChild(player.room).position + new Vector3(0, 10, 0);
                 else 

@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
     public TMP_InputField commandBar;
     public GameObject commandHolder;
     public GameObject pauseMenu;
+    public GameObject pointerPrefab;
+    public GameObject pointerHold;
 
     [Header("attack")]
     public bool hit;
@@ -187,6 +189,8 @@ public class PlayerController : MonoBehaviour {
 
     void ApplyMovement() {
         float tmpspeed = 1 + (speed / 50);
+        if(tmpspeed <= 0) tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 0.1f, 10000) * -1f;
+        else tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 0.1f, 10000);
     
         if (SmoothMovement) {
             Vector3 targetVelocity = new Vector3(Force.x * moveSpeed * tmpspeed, rb.linearVelocity.y, Force.y * moveSpeed * tmpspeed);
@@ -244,6 +248,16 @@ public class PlayerController : MonoBehaviour {
 
         if (health <= 0)
             Die();
+    }
+
+    public void SpawnPointer(GameObject Target) {
+        GameObject TMPointer = Instantiate(pointerPrefab);
+        TMPointer.transform.parent = pointerHold.transform;
+        
+        TMPointer.GetComponent<pointer>().player = transform.gameObject;
+        TMPointer.GetComponent<pointer>().Target = Target;
+
+        TMPointer.transform.localPosition = Vector3.zero;
     }
 
     // ienumerators

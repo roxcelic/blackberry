@@ -68,6 +68,11 @@ public class EnemySpawn : MonoBehaviour {
 
         foreach (GameObject bean in enemys){
             GameObject newBean = Instantiate(bean);
+
+            // add pointer to player
+            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+            players[0].GetComponent<PlayerController>().SpawnPointer(newBean);
+
             newBean.transform.parent = transform;
 
             Bounds bounds = col.bounds;
