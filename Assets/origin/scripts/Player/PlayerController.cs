@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject pauseMenu;
     public GameObject pointerPrefab;
     public GameObject pointerHold;
+    public GameObject hitDisplay;
 
     [Header("attack")]
     public bool hit;
@@ -246,8 +247,28 @@ public class PlayerController : MonoBehaviour {
         else
             health -= damage / (1 + (defence / 50));
 
+        SpawnHitDisplay(-(damage / (1 + (defence / 50))));
+
         if (health <= 0)
             Die();
+    }
+
+    public void Heal(float Heal) {
+        health += Heal * healModifier;
+
+        SpawnHitDisplay(Heal * healModifier);
+
+        if (health <= 0)
+            Die();
+    }
+
+    public void SpawnHitDisplay(float damage) {
+        GameObject tmpHitDisplay = Instantiate(hitDisplay);
+        tmpHitDisplay.transform.parent = transform.parent;
+        tmpHitDisplay.transform.localPosition = transform.localPosition;
+
+        tmpHitDisplay.GetComponent<Rigidbody>().linearVelocity = rb.linearVelocity;
+        tmpHitDisplay.GetComponent<hitDisplay>().damage = damage;
     }
 
     public void SpawnPointer(GameObject Target) {

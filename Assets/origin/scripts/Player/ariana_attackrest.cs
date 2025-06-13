@@ -22,7 +22,7 @@ public class ariana_attackrest : MonoBehaviour {
 
     void DealDamage(GameObject target){
         target.GetComponent<MainMenace>().Damage(damage);
-        transform.parent.GetComponent<PlayerController>().health +=  damage * transform.parent.GetComponent<PlayerController>().healModifier;
+        transform.parent.GetComponent<PlayerController>().Heal(damage);
 
         if (!attackPierce)
             Destroy(gameObject);

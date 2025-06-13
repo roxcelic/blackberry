@@ -10,6 +10,7 @@ using TMPro;
 public class SliderIsh : MenuItems {
     [Header("SliderConfig")]
     public int Selection = 0;
+    int privSelection = 0;
     public bool SelectedTrap;
 
     public int Min;
@@ -47,9 +48,12 @@ public class SliderIsh : MenuItems {
                 Selection = Min;
             if (Selection > Max)
                 Selection = Max;
+            
+            if (Selection != privSelection)
+                write();
+            
+            privSelection = Selection;
         }
-
-        write();
     }
 
     protected virtual void write() {

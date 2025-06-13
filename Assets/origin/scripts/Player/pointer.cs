@@ -26,9 +26,11 @@ public class pointer : MonoBehaviour {
         zangel *= 4;
         zangel -= 90f;
 
-        if (tL.x < pL.x) zangel -= 180;
+        if (tL.x < pL.x) zangel = 360 - zangel;
 
-        Quaternion target = Quaternion.Euler(0, 0, zangel);
-        transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * 5f);
+        if (zangel >= 0 && zangel <= 360) {
+            Quaternion target = Quaternion.Euler(0, 0, zangel);
+            transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * 5f);   
+        }
     }
 }

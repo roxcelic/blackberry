@@ -32,6 +32,7 @@ public class StatsMenuLoad : MonoBehaviour {
         endText += addText("current room", pc.room.ToString());
         endText += addText("total rooms", (5 + (PlayerPrefs.GetInt("floor") * 2)).ToString());
         endText += addText("menaces left", GameObject.FindGameObjectsWithTag("enemy").Length.ToString());
+        endText += addText("background speed", PlayerPrefs.GetInt("skyboxspeed", 1).ToString());
 
         // power ups
         endText += addHeader("power ups");
