@@ -11,12 +11,32 @@ public class worldGen : MonoBehaviour {
     public GameObject loadingMenu;
     public GameObject KillBox;
     public Vector3 worldTransform;
+    public Vector3 worldRotation;
     public List<GameObject> rooms;
     public int roomcount = 1;
     
     private int count = 0;
 
     private ImprovedGeneration vroomvroom;
+
+    [Header("tmpdata")]
+    public worldPositioning test;
+    
+    public enum worldPositioning {
+        Left,
+        Right,
+        Forward,
+        Backwards
+    };
+
+    public Dictionary<string, List<Vector3>> worldPositioningDirections = new Dictionary<string, List<Vector3>> {
+        // ["Left"] = new List<Vector3> { new Vector3(180, 0, 0), new Vector3(-25, 0, 0) },
+        ["Right"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(25, 0, 0) },
+        ["Forward"] = new List<Vector3> { new Vector3(0, -90, 0), new Vector3(0, 0, 25) },
+        // ["Backwards"] = new List<Vector3> { new Vector3(270, 0, 0), new Vector3(0, 0, -25) }
+    };
+
+    public List<Vector3> usedPositions = new List<Vector3>();
     
     void Start() {
         roomcount += PlayerPrefs.GetInt("floor", 0) * 2;
@@ -63,16 +83,30 @@ public class worldGen : MonoBehaviour {
             yield return new WaitUntil(() => vroomvroom.generated);
         }
 
+        count = 0;
         foreach (GameObject room in rooms){
+            List<Vector3> directionData = worldPositioningDirections[new List<string> (worldPositioningDirections.Keys) [generation.utils.randomIndex(worldPositioningDirections.Keys.Count, 4, getTrueSeed(count))]];
+
+            while (usedPositions.Contains(directionData[1]) || usedPositions.Contains(worldTransform + directionData[1])) {
+                directionData = worldPositioningDirections[new List<string> (worldPositioningDirections.Keys) [generation.utils.randomIndex(worldPositioningDirections.Keys.Count, 4, getTrueSeed(count))]];
+                count++;
+            }
+
             room.transform.position = worldTransform;
-            worldTransform -= new Vector3(-25f, 0f, 0f);
+            
+            room.transform.rotation =  Quaternion.Euler(worldRotation);
+            worldRotation = directionData[0];
+            worldTransform += directionData[1];
+
+            usedPositions.Add(directionData[0]);
+
             count++;
         }
 
         yield return new WaitForSeconds(1f);
 
-        KillBox.transform.localScale = new Vector3(KillBox.transform.localScale.x + (Mathf.Abs(worldTransform.x) / 50), KillBox.transform.localScale.y, KillBox.transform.localScale.z);
-        KillBox.transform.position = new Vector3(KillBox.transform.position.x + (Mathf.Abs(worldTransform.x) / 2), KillBox.transform.position.y, KillBox.transform.position.z);
+        KillBox.transform.localScale = new Vector3(KillBox.transform.localScale.x + (Mathf.Abs(worldTransform.x) / 50), KillBox.transform.localScale.y, KillBox.transform.localScale.z + (Mathf.Abs(worldTransform.z) / 50));
+        KillBox.transform.position = new Vector3(KillBox.transform.position.x + (Mathf.Abs(worldTransform.x) / 2), KillBox.transform.position.y, KillBox.transform.position.z + (Mathf.Abs(worldTransform.z) / 2));
 
         loadingMenu.GetComponent<Animator>().Play("loadingScreenExit");
         
@@ -80,5 +114,21 @@ public class worldGen : MonoBehaviour {
             child.GetComponent<KillBox>().started = true;
 
         PlayerPrefs.SetString("generated", "true");
+    }
+
+    // a function to get the true seed
+    public long getTrueSeed(int room){
+
+        string seed = PlayerPrefs.HasKey("seed") ? PlayerPrefs.GetString("seed") : "";
+        int floor = PlayerPrefs.HasKey("floor") ? PlayerPrefs.GetInt("floor") : 0;
+
+        // fix seed
+        seed = generation.seed.Check(seed);
+        long trueSeed = generation.seed.Convert(seed);
+        
+        long trueseedfloor = generation.seed.incrementFloor(trueSeed, PlayerPrefs.GetInt("floor", 0));
+        long trueseedroom = generation.seed.incrementRoom(trueseedfloor, room);
+
+        return trueseedroom;
     }
 }

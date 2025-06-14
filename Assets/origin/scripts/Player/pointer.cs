@@ -4,33 +4,89 @@ public class pointer : MonoBehaviour {
     public GameObject player;
     public GameObject Target;
 
+    public Vector3 defaultScale = new(2, 2, 1);
+    public types type;
+
+    public enum types {
+        Roxie,
+        Dylan
+    };
+
+    void Start() {
+        if (PlayerPrefs.GetString("altPointer", "false") == "true") type = types.Dylan;
+    }
+
     void Update() {
         if (player == null || Target == null){
             Destroy(transform.gameObject);
             return;
         }
 
-        // positions
-        Vector2 tL = new(Target.transform.position.x, Target.transform.position.y);
-        Vector2 pL = new(player.transform.position.x, player.transform.position.y);
+        // assign variables
+        float A = 0;
+        float B = 0;
+        float C = 0;
 
-        Vector2 b = tL;
-        Vector2 a = pL;
+        float zangel = 0;
+        float scaleModifier = 1f;
 
-        float radionThing = (((a.x + b.x) * (a.y + b.y)) / sys.math.hyp(a)) * Mathf.Deg2Rad;
-        float zangel = (Mathf.Acos(radionThing));
+        Vector2 tL = new Vector2();
+        Vector2 pL = new Vector2();
 
+        switch (type.ToString()) {
+            case "Roxie":
+                // positions
+                tL = new Vector2(Target.transform.position.x, Target.transform.position.y);
+                pL = new(0, 1);
 
-        // my angel
-        zangel *= Mathf.Rad2Deg;
-        zangel *= 4;
-        zangel -= 90f;
+                tL -= new Vector2(player.transform.position.x, player.transform.position.y);
+                tL = tL.normalized;
 
-        if (tL.x < pL.x) zangel = 360 - zangel;
+                A = tL.x * pL.x + tL.y * pL.y;
+                B = Mathf.Sqrt(Mathf.Pow(tL.x, 2) + Mathf.Pow(tL.y, 2));
+                C = Mathf.Sqrt(Mathf.Pow(pL.x, 2) + Mathf.Pow(pL.y, 2));
+
+                zangel = Mathf.Acos(
+                    (A / (B * C))
+                ) *
+                Mathf.Rad2Deg;
+
+                if (tL.x > pL.x ) zangel = 360 - zangel;
+
+                break;
+            case "Dylan":
+                scaleModifier = (Mathf.Abs(player.transform.position.y - Target.transform.position.y));
+                Debug.Log(scaleModifier);
+                scaleModifier = Mathf.Clamp(scaleModifier, 0.4f, 1f);
+                        
+                // positions
+                tL = new Vector2(Target.transform.position.x, Target.transform.position.z);
+                pL = new(0, 1);
+
+                tL -= new Vector2(player.transform.position.x, player.transform.position.z);
+                tL = tL.normalized;
+
+                A = tL.x * pL.x + tL.y * pL.y;
+                B = Mathf.Sqrt(Mathf.Pow(tL.x, 2) + Mathf.Pow(tL.y, 2));
+                C = Mathf.Sqrt(Mathf.Pow(pL.x, 2) + Mathf.Pow(pL.y, 2));
+
+                zangel = Mathf.Acos(
+                    (A / (B * C))
+                ) *
+                Mathf.Rad2Deg;
+
+                if (tL.x > pL.x ) zangel = 360 - zangel;
+
+                transform.localScale = defaultScale * scaleModifier;
+
+                break;
+
+        }
 
         if (zangel >= 0 && zangel <= 360) {
             Quaternion target = Quaternion.Euler(0, 0, zangel);
-            transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * 5f);   
+            transform.rotation = target;   
         }
+
     }
 }

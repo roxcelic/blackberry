@@ -25,17 +25,11 @@ public class EnemySpawn : MonoBehaviour {
 
     void Update() {
         if (GameObject.FindGameObjectsWithTag("enemy").Length == 0 && activated){
-            Collider[] hitColliders = Physics.OverlapBox(col.bounds.center, col.bounds.size / 2, Quaternion.identity, LayerMask.GetMask("Walls"));
-
-            foreach (Collider hitCollider in hitColliders) {
-                if (hitCollider.transform.parent.gameObject.GetComponent<DoorBlock>() != null) {
-                    hitCollider.transform.parent.gameObject.GetComponent<DoorBlock>().RemoveBlockAid();
-                }
-            }
-
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
             if (players.Length != 0) {
+                if(world.transform.childCount - 1 >= players[0].GetComponent<PlayerController>().room + 1) world.transform.GetChild(players[0].GetComponent<PlayerController>().room + 1).gameObject.GetComponent<ImprovedGeneration>().gate.GetComponent<DoorBlock>().RemoveBlockAid();
+
                 players[0].GetComponent<PlayerController>().room+=1;
 
                 if (GetRoomCount() - 1< players[0].GetComponent<PlayerController>().room) {    

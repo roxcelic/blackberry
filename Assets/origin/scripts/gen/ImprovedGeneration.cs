@@ -56,6 +56,8 @@ public class ImprovedGeneration : MonoBehaviour {
         public static List<GameObject> Enemys;
     }
 
+    public GameObject gate;
+
     [Header("player")]
     public GameObject player;
     
@@ -90,6 +92,7 @@ public class ImprovedGeneration : MonoBehaviour {
         }
     
         // starting
+        if (PlayerPrefs.GetInt("floor", 0) % 5 != 0 || PlayerPrefs.GetInt("floor", 0) == 0)
         StartCoroutine(startGen());
     }
 
@@ -215,6 +218,8 @@ public class ImprovedGeneration : MonoBehaviour {
             } else {
                 roomConfig.walls.West = SpawnObject(wallsansdoor, 1, new Vector3(-90f, 0f, 0f), new Vector3(0, 0, 0), "west");
             } 
+
+            gate = roomConfig.walls.West;
 
         // spawn roof
         if (!experement) roomConfig.roof = SpawnObject(roofs, 1, new Vector3(90f, 0f, 0f), new Vector3(0, tmpheight, 0), "roof");
