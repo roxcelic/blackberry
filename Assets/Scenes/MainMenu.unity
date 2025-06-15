@@ -5642,7 +5642,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1577759319}
   - component: {fileID: 1577759320}
-  - component: {fileID: 1577759321}
   m_Layer: 0
   m_Name: seed
   m_TagString: Untagged
@@ -5726,21 +5725,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1577759321
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1577759318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c21c58a16d620849b954fd6ba2db4a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seedHolder: {fileID: 0}
-  expSample: {fileID: 0}
-  seed: 
 --- !u!1 &1589627226
 GameObject:
   m_ObjectHideFlags: 0

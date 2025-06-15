@@ -29,12 +29,22 @@ public class worldGen : MonoBehaviour {
         Backwards
     };
 
-    public Dictionary<string, List<Vector3>> worldPositioningDirections = new Dictionary<string, List<Vector3>> {
-        // ["Left"] = new List<Vector3> { new Vector3(180, 0, 0), new Vector3(-25, 0, 0) },
-        ["Right"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(25, 0, 0) },
-        ["Forward"] = new List<Vector3> { new Vector3(0, -90, 0), new Vector3(0, 0, 25) },
-        // ["Backwards"] = new List<Vector3> { new Vector3(270, 0, 0), new Vector3(0, 0, -25) }
+    // directiontions
+    public List<Dictionary<string, List<Vector3>>> worldPositioningDirections = new List<Dictionary<string, List<Vector3>>>{
+        {
+            new Dictionary<string, List<Vector3>> {
+                ["Right"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(25, 0, 0) },
+                ["Forward"] = new List<Vector3> { new Vector3(0, -90, 0), new Vector3(0, 0, 25) },
+            }
+        },
+        {
+            new Dictionary<string, List<Vector3>> {
+                ["Left"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(-25, 0, 0) },
+                ["Backwards"] = new List<Vector3> { new Vector3(0, 90, 0), new Vector3(0, 0, -25) },
+            }
+        }
     };
+
 
     public List<Vector3> usedPositions = new List<Vector3>();
     
@@ -85,10 +95,12 @@ public class worldGen : MonoBehaviour {
 
         count = 0;
         foreach (GameObject room in rooms){
-            List<Vector3> directionData = worldPositioningDirections[new List<string> (worldPositioningDirections.Keys) [generation.utils.randomIndex(worldPositioningDirections.Keys.Count, 4, getTrueSeed(count))]];
+            Dictionary<string, List<Vector3>> tmpPosition = worldPositioningDirections[generation.utils.randomIndex(worldPositioningDirections.Count, 4, getTrueSeed(count))];
+
+            List<Vector3> directionData = tmpPosition[new List<string> (tmpPosition.Keys) [generation.utils.randomIndex(tmpPosition.Keys.Count, 4, getTrueSeed(count))]];
 
             while (usedPositions.Contains(directionData[1]) || usedPositions.Contains(worldTransform + directionData[1])) {
-                directionData = worldPositioningDirections[new List<string> (worldPositioningDirections.Keys) [generation.utils.randomIndex(worldPositioningDirections.Keys.Count, 4, getTrueSeed(count))]];
+                directionData = tmpPosition[new List<string> (tmpPosition.Keys) [generation.utils.randomIndex(tmpPosition.Keys.Count, 4, getTrueSeed(count))]];
                 count++;
             }
 
