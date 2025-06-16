@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuRoot: {fileID: 0}
-  unSelectable: 0
+  unSelectable: 1
   Name: GamePlay Select
   Description: Roxies Character
   smoothSpeed: 5
