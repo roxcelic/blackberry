@@ -3,6 +3,7 @@ using UnityEngine;
 public class attackrest : MonoBehaviour {
     public string eviltag;
     public float damage = 1;
+    public nockbackTest nock;
 
     void OnEnable() {
         CheckRadius();
@@ -26,11 +27,13 @@ public class attackrest : MonoBehaviour {
         switch (eviltag) {
             case "Player":
                 target.GetComponent<PlayerController>().Damage(damage);
-
+                nock.DamageDone = true;
+                
                 break;
             case "enemy":
                 target.GetComponent<MainMenace>().Damage(damage);
-                transform.parent.GetComponent<PlayerController>().health +=  damage * transform.parent.GetComponent<PlayerController>().healModifier;
+                transform.parent.GetComponent<PlayerController>().Heal(damage);
+                nock.DamageDone = true;
 
                 break;
         }

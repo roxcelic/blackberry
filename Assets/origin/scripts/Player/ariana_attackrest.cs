@@ -4,6 +4,7 @@ public class ariana_attackrest : MonoBehaviour {
     public float damage = 1;
     public bool attackPierce;
     private bool StartTracking = false;
+    public nockbackTest nock;
 
     void OnEnable() {
         StartTracking = true;
@@ -23,6 +24,7 @@ public class ariana_attackrest : MonoBehaviour {
     void DealDamage(GameObject target){
         target.GetComponent<MainMenace>().Damage(damage);
         transform.parent.GetComponent<PlayerController>().Heal(damage);
+        nock.DamageDone = true;
 
         if (!attackPierce)
             Destroy(gameObject);

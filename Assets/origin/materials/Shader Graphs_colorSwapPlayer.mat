@@ -59,15 +59,15 @@ Material:
     - _QueueOffset: 0
     - _changeColor: 1
     m_Colors:
-    - _ClothesColor1: {r: 0.13725491, g: 0.12941177, b: 0.20784315, a: 0}
-    - _ClothesColor2: {r: 0.53333336, g: 0.43921572, b: 0.19215688, a: 0}
-    - _ClothesColor3: {r: 0.54901963, g: 0.57254905, b: 0.29411766, a: 0}
+    - _ClothesColor1: {r: 0.5660378, g: 0.4151776, b: 0, a: 0}
+    - _ClothesColor2: {r: 1, g: 0.72413784, b: 0, a: 0}
+    - _ClothesColor3: {r: 0.9056604, g: 0.33902764, b: 0, a: 0}
     - _Color: {r: 0, g: 0, b: 0, a: 0}
     - _EyeColor: {r: 0, g: 0, b: 0, a: 0}
     - _HairColor: {r: 0, g: 0, b: 0, a: 0}
-    - _HairColor1: {r: 0.54901963, g: 0.34901962, b: 0.23529413, a: 0}
-    - _HairColor2: {r: 0.27450982, g: 0.16078432, b: 0.2392157, a: 0}
-    - _HairColor3: {r: 0.4039216, g: 0.227451, b: 0.19607845, a: 0}
+    - _HairColor1: {r: 1, g: 1, b: 1, a: 0}
+    - _HairColor2: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 0}
+    - _HairColor3: {r: 1, g: 1, b: 1, a: 0}
     - _OutlineColor: {r: 0.9333334, g: 0.76470596, b: 0.6039216, a: 0}
     - _SkinColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

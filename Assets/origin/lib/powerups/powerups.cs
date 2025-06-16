@@ -33,12 +33,14 @@ namespace powerups {
                 }
             },
             ["girl power"] = new powerups.PowerUp{
-                Description = "gives you a dash and sets the dash force to 50f",
+                Description = "enables dash and sets the dash force to 50f or doubles it",
                 action = (This) => {
                     Base(This);
                     PlayerController controller = This.GetComponent<PlayerController>();
+                    if (controller.dash) controller.dashForceModifier *= 2;
+                    else controller.dashForceModifier = 50f;
+
                     controller.dash = true;
-                    controller.dashForceModifier = 50f;
                 }
             }
         };

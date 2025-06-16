@@ -65,10 +65,16 @@ public class PlayerController : MonoBehaviour {
     public bool dead;
 
     [Header("extra")]
+    // pointers
+    public bool pointer;
+
     // dash
     public bool dash;
     public bool dashing = false;
     [SerializeField] public float dashForceModifier = 5f;
+
+    // void damage
+    public bool fallDamage = false;
 
     // cashs
         // movement smoothing
@@ -241,7 +247,9 @@ public class PlayerController : MonoBehaviour {
         StartCoroutine(Dashing());
     }
 
-    public void Damage(float damage) {
+    public void Damage(float damage, string type = "") {
+        if (type == "void" && fallDamage) return;
+
         if (guarding)
             health -= (damage / (1 + (defence / 50)) / GuardModifier);
         else
@@ -253,10 +261,13 @@ public class PlayerController : MonoBehaviour {
             Die();
     }
 
-    public void Heal(float Heal) {
-        health += Heal * healModifier;
+    public virtual void Heal(float Heal, bool modified = false) {
+        if (modified) health += Heal;
+        else health += Heal * healModifier;
 
-        SpawnHitDisplay(Heal * healModifier);
+        float displayHealth = modified ? Heal : Heal * healModifier;
+
+        SpawnHitDisplay(displayHealth);
 
         if (health <= 0)
             Die();
@@ -264,7 +275,7 @@ public class PlayerController : MonoBehaviour {
 
     public void SpawnHitDisplay(float damage) {
         GameObject tmpHitDisplay = Instantiate(hitDisplay);
-        tmpHitDisplay.transform.parent = transform.parent;
+        tmpHitDisplay.transform.SetParent(transform.parent);
         tmpHitDisplay.transform.localPosition = transform.localPosition;
 
         tmpHitDisplay.GetComponent<Rigidbody>().linearVelocity = rb.linearVelocity;

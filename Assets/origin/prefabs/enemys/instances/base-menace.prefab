@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eviltag: Player
   damage: 20
+  nock: {fileID: 1070874923271588821}
 --- !u!114 &1070874923271588821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +166,7 @@ MonoBehaviour:
   cooldown: 1
   canExplode: 1
   targetTag: Player
+  DamageDone: 0
 --- !u!1 &2485147676049928404
 GameObject:
   m_ObjectHideFlags: 0

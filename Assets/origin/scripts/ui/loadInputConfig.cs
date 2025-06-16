@@ -5,9 +5,10 @@ using TMPro;
 
 public class loadInputConfig : MonoBehaviour {
     public eevee.config config;
+    public TMP_Text text;
 
     void OnEnable() {
-        transform.GetComponent<TMP_Text>().text = $"change the control for {config.displayName}";
+        text.text = $"change the control for {config.displayName}";
 
         transform.GetChild(1).GetComponent<ControlChanger>().config = config;
             transform.GetChild(1).GetChild(0).GetComponent<TMP_Text>().text = $"Keyboard Key: {(KeyCode)config.KEYBOARD_code}";

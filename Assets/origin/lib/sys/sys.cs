@@ -89,6 +89,20 @@ namespace sys {
                     }
                 },
                 {
+                    "eamon-heal", new eevee.config {
+                        displayName = "eamon-heal",
+                        KEYBOARD_code = (int)KeyCode.Return,
+                        CONTROLLER_name = ""
+                    }
+                },
+                {
+                    "silas-spin", new eevee.config {
+                        displayName = "silas-spin",
+                        KEYBOARD_code = (int)KeyCode.Return,
+                        CONTROLLER_name = ""
+                    }
+                },
+                {
                     "pause", new eevee.config {
                         displayName = "pause",
                         KEYBOARD_code = (int)KeyCode.Escape,

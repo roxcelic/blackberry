@@ -5,12 +5,24 @@ using System;
 using System.Collections;
 
 public class PlayButton : MenuItems {
+    [Header("PlayButton Config")]
     public int WorldType;
+    public int playerType;
     public GameObject loadingScreen;
     public GameObject seedMenu;
 
+    protected override void Start() {
+        base.Start();
+
+        loadingScreen = GameObject.Find("Canvas").transform.Find("loadingScreen").gameObject;
+        seedMenu = transform.parent.parent.GetChild(transform.parent.parent.childCount - 1).gameObject;
+    }
+
     protected override void Action() {
+        // configable settings
         PlayerPrefs.SetInt("worldType", WorldType);
+        PlayerPrefs.SetInt("playerType", playerType);
+
         PlayerPrefs.SetString("powerups", "");
         // PlayerPrefs.SetInt("powerupMode", WorldType);
         PlayerPrefs.SetInt("powerupMode", 0);
@@ -39,6 +51,7 @@ public class PlayButton : MenuItems {
             seed = GenerateRandomSeed();
 
         PlayerPrefs.SetString("seed", seed);
+        Debug.Log($"new seed: {seed}");
         SceneManager.LoadScene("Level");
     }
 

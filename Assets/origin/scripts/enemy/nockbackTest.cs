@@ -14,8 +14,15 @@ public class nockbackTest : MonoBehaviour {
     public bool cooldown = true;
     public bool canExplode = true;
     public string targetTag;
+    public bool DamageDone = false;
 
     void OnTriggerStay(Collider collision) {
+        StartCoroutine(dealnockback(collision));
+    }
+
+    public IEnumerator dealnockback(Collider collision) {
+        yield return new WaitUntil(() => DamageDone);
+
         if (collision.gameObject.CompareTag(targetTag) && (canExplode || !cooldown)){
             canExplode = false;
             
@@ -59,5 +66,7 @@ public class nockbackTest : MonoBehaviour {
 
             canExplode = true;
         }
+
+        DamageDone = false;
     }
 }

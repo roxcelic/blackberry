@@ -96,24 +96,6 @@ public class MenuController : MonoBehaviour {
                 (SelectedY != PrevSelectedY)
             ) SelectedItem = transform.GetChild(SelectedY).GetChild(SelectedX).gameObject;
 
-            if (!SelectedItem.activeSelf && up || down) {
-                if (down) {
-                    if (SelectedY >= MaxY && !SelectedItem.activeSelf) {
-                        UpdateSelection(true, false);
-                    } else {
-                        SelectedY++;
-                        UpdateSelection();
-                    }
-                } else if (up) {
-                    if (SelectedY <= 0 && !SelectedItem.activeSelf) {
-                        UpdateSelection(false, true);
-                    } else {
-                        SelectedY--;
-                        UpdateSelection();
-                    }
-                }
-            }
-
             // updating log values
             PrevSelectedX = SelectedX;
             PrevSelectedY = SelectedY;

@@ -65,7 +65,7 @@ public class EnemySpawn : MonoBehaviour {
 
             // add pointer to player
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            players[0].GetComponent<PlayerController>().SpawnPointer(newBean);
+            if(players[0].GetComponent<PlayerController>().pointer) players[0].GetComponent<PlayerController>().SpawnPointer(newBean);
 
             Bounds bounds = col.bounds;
 

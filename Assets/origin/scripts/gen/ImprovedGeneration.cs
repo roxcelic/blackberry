@@ -59,10 +59,10 @@ public class ImprovedGeneration : MonoBehaviour {
     public GameObject gate;
 
     [Header("player")]
-    public GameObject player;
+    public GameObject[] player;
     
     [Header("alt")]
-    public GameObject altPlayer;
+    public GameObject[] altPlayer;
     [SerializeField] public List<GameObject> altfloors = new List<GameObject>();
     [SerializeField] public List<GameObject> altroofs = new List<GameObject>();
     [SerializeField] public List<GameObject> altwalls = new List<GameObject>();
@@ -211,7 +211,7 @@ public class ImprovedGeneration : MonoBehaviour {
 
                 if (!experement) roomConfig.walls.West = SpawnObject(walls, 1, new Vector3(-90f, 0f, 0f), new Vector3(-tmpwidth, 0, 0), "west");
 
-                roomConfig.player = Instantiate(player, transform);
+                roomConfig.player = Instantiate(player[PlayerPrefs.GetInt("playerType", 0)], transform);
                 roomConfig.player.transform.position = (roomConfig.floor.transform.position + new Vector3(0, 1, 0));
 
                 transform.parent.GetComponent<worldGen>().Player = roomConfig.player;

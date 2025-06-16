@@ -646,10 +646,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3918354711335364380}
   - {fileID: 8286926893529360309}
   - {fileID: 2424011922559536195}
   - {fileID: 4242959206607728938}
-  - {fileID: 3918354711335364380}
   m_Father: {fileID: 5279005632336701134}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -678,7 +678,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &8441723150939319117
 MonoBehaviour:
@@ -1960,6 +1960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eviltag: enemy
   damage: 1
+  nock: {fileID: 1165800483653300706}
 --- !u!114 &1165800483653300706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1972,11 +1973,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5b057cf385819b8b8eac11cb5837cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionForce: 10
+  explosionForce: 20
   cooldownTime: 1
   cooldown: 1
   canExplode: 1
   targetTag: enemy
+  DamageDone: 0
 --- !u!1 &4807811727445811502
 GameObject:
   m_ObjectHideFlags: 0
@@ -3300,7 +3302,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7adb54695afc5b2469b01b4035554f07, type: 2}
+  - {fileID: -876546973899608171, guid: 2b786af4db1e8c84f8af7b1ef65beab6, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3400,9 +3402,10 @@ MonoBehaviour:
   health: 0
   healModifier: 0.25
   GuardModifier: 2
-  speed: 0
+  speed: 25
   defence: 10
   dead: 0
+  pointer: 1
   dash: 0
   dashing: 0
   dashForceModifier: 50

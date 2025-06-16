@@ -68,10 +68,9 @@ MonoBehaviour:
   - {fileID: 6172258477605051330, guid: f208f827005a51647bc2c8132974cc1c, type: 3}
   - {fileID: 6172258477605051330, guid: b894725f9cbf0f646a05756d9139fea6, type: 3}
   enemys:
-  - {fileID: 6134737756877529443, guid: fad728bde9026844ca3acd110b4ef27d, type: 3}
-  - {fileID: 6134737756877529443, guid: fad728bde9026844ca3acd110b4ef27d, type: 3}
-  - {fileID: 6134737756877529443, guid: fad728bde9026844ca3acd110b4ef27d, type: 3}
-  - {fileID: 6134737756877529443, guid: 29df8b201665caa4db269bffd94d10e8, type: 3}
+  - {fileID: 2805807333211260156, guid: d1e356c664bd54f42b8da70ea59706b4, type: 3}
+  - {fileID: 2805807333211260156, guid: 1c8e0d671abdff94eaec850493a8f82d, type: 3}
+  - {fileID: 2805807333211260156, guid: 3c5041f5daa6a5b4aae398a4484fc4c1, type: 3}
   EnemySpawner: {fileID: 4766749097719553810, guid: 3d9f242c60280af4389eb4fb7e2bb2c7, type: 3}
   width: 0.25
   height: 0.1
@@ -80,8 +79,13 @@ MonoBehaviour:
   safeborder: 5
   StartRoom: 0
   EndRoom: 0
-  player: {fileID: 364097720074593624, guid: 4d322e4ccef98d44a8c310726a8c0074, type: 3}
-  altPlayer: {fileID: 7238305402874162457, guid: 53bfce4764cfc8a429ce4f93819ad255, type: 3}
+  gate: {fileID: 0}
+  player:
+  - {fileID: 2264230043027723613, guid: 407a08484e5ec5a48a41c9297132fb67, type: 3}
+  altPlayer:
+  - {fileID: 7238305402874162457, guid: 53bfce4764cfc8a429ce4f93819ad255, type: 3}
+  - {fileID: 7238305402874162457, guid: eefe4ab2a9b06224d9cda14103a569b0, type: 3}
+  - {fileID: 7238305402874162457, guid: 1bb9e24e5b95ed9498a24cb009360c45, type: 3}
   altfloors:
   - {fileID: 6045188658328113593, guid: 6826e1229eea87740af4d8c9d5b16c72, type: 3}
   altroofs:

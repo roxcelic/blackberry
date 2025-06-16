@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   attackPierce: 0
+  nock: {fileID: 7296078450214488347}
 --- !u!114 &7296078450214488347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +116,7 @@ MonoBehaviour:
   cooldown: 1
   canExplode: 1
   targetTag: enemy
+  DamageDone: 0
 --- !u!1 &6965325265825470552
 GameObject:
   m_ObjectHideFlags: 0
