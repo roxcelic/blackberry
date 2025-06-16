@@ -39,8 +39,12 @@ public class worldGen : MonoBehaviour {
         },
         {
             new Dictionary<string, List<Vector3>> {
-                ["Left"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(-25, 0, 0) },
-                ["Backwards"] = new List<Vector3> { new Vector3(0, 90, 0), new Vector3(0, 0, -25) },
+                ["Right"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(25, 0, 0) }
+            }
+        },
+        {
+            new Dictionary<string, List<Vector3>> {
+                ["Forward"] = new List<Vector3> { new Vector3(0, -90, 0), new Vector3(0, 0, 25) },
             }
         }
     };
@@ -94,9 +98,9 @@ public class worldGen : MonoBehaviour {
         }
 
         count = 0;
-        foreach (GameObject room in rooms){
-            Dictionary<string, List<Vector3>> tmpPosition = worldPositioningDirections[generation.utils.randomIndex(worldPositioningDirections.Count, 4, getTrueSeed(count))];
+        Dictionary<string, List<Vector3>> tmpPosition = worldPositioningDirections[generation.utils.randomIndex(worldPositioningDirections.Count, 4, getTrueSeed(count))];
 
+        foreach (GameObject room in rooms){
             List<Vector3> directionData = tmpPosition[new List<string> (tmpPosition.Keys) [generation.utils.randomIndex(tmpPosition.Keys.Count, 4, getTrueSeed(count))]];
 
             while (usedPositions.Contains(directionData[1]) || usedPositions.Contains(worldTransform + directionData[1])) {

@@ -67,17 +67,9 @@ public class EnemySpawn : MonoBehaviour {
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
             players[0].GetComponent<PlayerController>().SpawnPointer(newBean);
 
-            newBean.transform.parent = transform;
-
             Bounds bounds = col.bounds;
 
-            newBean.transform.position = Vector3.zero;
-
-            newBean.transform.localPosition = new Vector3(
-                0,
-                1,
-                0
-            );
+            newBean.transform.position = transform.position + new Vector3(0, 1, 0);
 
             Debug.Log($"spawn position = {newBean.transform.position}");
         }

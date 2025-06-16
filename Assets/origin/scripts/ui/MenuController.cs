@@ -48,6 +48,10 @@ public class MenuController : MonoBehaviour {
     }
 
     void Update() {
+        UpdateSelection();
+    }
+
+    public void UpdateSelection(bool down = false, bool up = false) {
         if (active && canMove){
             bool vertical = false;
             // inputs
@@ -62,10 +66,12 @@ public class MenuController : MonoBehaviour {
                 if (eevee.input.Collect("MenuUp") && SelectedY > 0){
                     SelectedY--;
                     vertical = true;
+                    up = true;
                 }
                 if (eevee.input.Collect("MenuDown") && SelectedY < MaxY){
                     SelectedY++;
                     vertical = true;
+                    down = true;
                 }
 
                 if (eevee.input.Collect("MenuBack") && canReturn){
@@ -89,6 +95,24 @@ public class MenuController : MonoBehaviour {
                 (SelectedX != PrevSelectedX) ||
                 (SelectedY != PrevSelectedY)
             ) SelectedItem = transform.GetChild(SelectedY).GetChild(SelectedX).gameObject;
+
+            if (!SelectedItem.activeSelf && up || down) {
+                if (down) {
+                    if (SelectedY >= MaxY && !SelectedItem.activeSelf) {
+                        UpdateSelection(true, false);
+                    } else {
+                        SelectedY++;
+                        UpdateSelection();
+                    }
+                } else if (up) {
+                    if (SelectedY <= 0 && !SelectedItem.activeSelf) {
+                        UpdateSelection(false, true);
+                    } else {
+                        SelectedY--;
+                        UpdateSelection();
+                    }
+                }
+            }
 
             // updating log values
             PrevSelectedX = SelectedX;
