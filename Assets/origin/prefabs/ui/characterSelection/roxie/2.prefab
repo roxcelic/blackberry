@@ -309,7 +309,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "speed: 0\nhealth: 200\ndefence: 25\t\neamon"
+  m_text: "speed: 0\nhealth: 150\ndefence: 25\t\neamon"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7d50fc9d5d23aa10f8a1d25f3da47b3b, type: 2}
   m_sharedMaterial: {fileID: 8736331409222527681, guid: 7d50fc9d5d23aa10f8a1d25f3da47b3b, type: 2}

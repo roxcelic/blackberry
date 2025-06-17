@@ -3372,6 +3372,9 @@ MonoBehaviour:
   moveSpeed: 5
   Force: {x: 0, y: 0}
   Velocity: {x: 0, y: 0, z: 0}
+  jumpGravity: 5
+  maxJumps: 1
+  jumps: 0
   SmoothMovement: 1
   CanMove: 1
   MovementSmoothing: 0.05
@@ -3405,13 +3408,18 @@ MonoBehaviour:
   speed: 200
   defence: 0
   dead: 0
+  groundPoundGravity: 50
   pointer: 0
   dash: 0
   dashing: 0
   dashForceModifier: 50
   fallDamage: 1
+  voidLifeSteal: 1
+  canJump: 0
+  autoAttack: 1
   act: []
   spinning: 0
+  silasroommodifier: 1.25
 --- !u!1 &7345569235883602713
 GameObject:
   m_ObjectHideFlags: 0

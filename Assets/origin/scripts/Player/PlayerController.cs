@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour {
 
     public Vector2 Force;
     public Vector3 Velocity = Vector3.zero;
+    public float jumpGravity = 5f;
+    public float maxJumps = 1f;
+    public float jumps;
 
     public bool SmoothMovement = true;
     public bool CanMove = true;
@@ -64,6 +67,9 @@ public class PlayerController : MonoBehaviour {
 
     public bool dead;
 
+    [Header("gravity")]
+    public float groundPoundGravity = 50f;
+
     [Header("extra")]
     // pointers
     public bool pointer;
@@ -75,6 +81,13 @@ public class PlayerController : MonoBehaviour {
 
     // void damage
     public bool fallDamage = false;
+    public bool voidLifeSteal = false;
+
+    // jump
+    public bool canJump = false;
+
+    // auto attack
+    public bool autoAttack = false;
 
     // cashs
         // movement smoothing
@@ -88,7 +101,8 @@ public class PlayerController : MonoBehaviour {
     public List<string> act;
 
     protected virtual void OnEnable() {
-        transform.GetChild(transform.childCount - 1).GetComponent<attackrest>().damage = baseAttackDamage;
+        attackComp.GetComponent<attackrest>().damage = baseAttackDamage;
+        jumps = maxJumps;
     }
 
     protected virtual void Start() {
@@ -151,8 +165,19 @@ public class PlayerController : MonoBehaviour {
         if (CanMove)
             ApplyMovement();
         
-        if (eevee.input.Collect("attack"))
+        if (eevee.input.Collect("attack") || autoAttack)
             Attack();
+        
+        // ground pound
+        if (eevee.input.Grab("ground-pound")) {
+            rb.linearVelocity -= new Vector3(0, groundPoundGravity, 0);
+        }
+
+        // jump
+        if (eevee.input.Grab("jump") && jumps >= 1 && canJump) {
+            rb.linearVelocity += new Vector3(0, jumpGravity, 0);
+            jumps--;
+        }
 
         if (eevee.input.Collect("commandBarOpen") && PlayerPrefs.GetString("dev", "false") == "true")
             openCommandBar();
@@ -194,6 +219,11 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+    void OnCollisionEnter(Collision collision) {
+        if (collision.gameObject.CompareTag("floor"))
+            jumps = maxJumps;
+    }
+
     void ApplyMovement() {
         float tmpspeed = 1 + (speed / 50);
         if(tmpspeed <= 0) tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 0.1f, 10000) * -1f;
@@ -227,6 +257,10 @@ public class PlayerController : MonoBehaviour {
             attackComp.SetActive(true);
             BaseAttackStamina-=BaseAttackCost;
         }
+    }
+
+    public virtual void increaseRoomIndex() {
+        room++;
     }
 
     public void Die() {

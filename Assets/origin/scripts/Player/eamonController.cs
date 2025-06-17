@@ -1,11 +1,18 @@
 using UnityEngine;
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
 public class eamonController : PlayerController {
+    public bool canUseAbility;
 
     protected override void Update() {
         base.Update();
 
-        if (eevee.input.Collect("eamon-heal")) {
+        if (eevee.input.Collect("special") && canUseAbility) {
+            canUseAbility = false;
+
             float possible_heal = base.PlayerSpecificMeter / 2;
             float required_heal = base.maxHealth - base.health;
             float applied_heal = 0;
@@ -22,6 +29,8 @@ public class eamonController : PlayerController {
 
             Heal(applied_heal, true);
             base.PlayerSpecificMeter = possible_heal * 2;
+
+            StartCoroutine(healWait(0.25f));
         }
     }
     
@@ -29,5 +38,10 @@ public class eamonController : PlayerController {
         base.Heal(Heal, modified);
 
         base.PlayerSpecificMeter += Heal;
+    }
+
+    public IEnumerator healWait(float delay) {
+        yield return new WaitForSeconds(delay);
+        canUseAbility = true;
     }
 }

@@ -38,6 +38,20 @@ namespace sys {
                         CONTROLLER_name = "Left Stick Down"
                     }
                 },
+                {
+                    "ground-pound", new eevee.config {
+                        displayName = "ground-pound",
+                        KEYBOARD_code = (int)KeyCode.LeftControl,
+                        CONTROLLER_name = "Left Stick Down"
+                    }
+                },
+                {
+                    "jump", new eevee.config {
+                        displayName = "jump",
+                        KEYBOARD_code = (int)KeyCode.Space,
+                        CONTROLLER_name = "Left Stick Down"
+                    }
+                },
                 // attack
                 {
                     "guard", new eevee.config {
@@ -56,10 +70,11 @@ namespace sys {
                 {
                     "attack", new eevee.config {
                         displayName = "attack",
-                        KEYBOARD_code = (int)KeyCode.Return,
+                        KEYBOARD_code = (int)KeyCode.C,
                         CONTROLLER_name = "Right Trigger"
                     }
                 },
+                // special attack directions
                 {
                     "attack-L", new eevee.config {
                         displayName = "attack-L",
@@ -88,16 +103,10 @@ namespace sys {
                         CONTROLLER_name = ""
                     }
                 },
+                // special attack
                 {
-                    "eamon-heal", new eevee.config {
-                        displayName = "eamon-heal",
-                        KEYBOARD_code = (int)KeyCode.Return,
-                        CONTROLLER_name = ""
-                    }
-                },
-                {
-                    "silas-spin", new eevee.config {
-                        displayName = "silas-spin",
+                    "special", new eevee.config {
+                        displayName = "special",
                         KEYBOARD_code = (int)KeyCode.Return,
                         CONTROLLER_name = ""
                     }
@@ -112,7 +121,7 @@ namespace sys {
                 // menu
                 {
                     "MenuLeft", new eevee.config {
-                        displayName = "pause",
+                        displayName = "MenuLeft",
                         KEYBOARD_code = (int)KeyCode.LeftArrow,
                         CONTROLLER_name = "Left Stick Left"
                     }
@@ -150,6 +159,42 @@ namespace sys {
                         displayName = "MenuBack",
                         KEYBOARD_code = (int)KeyCode.X,
                         CONTROLLER_name = "A"
+                    }
+                },
+                // harrisons controls
+                {
+                    "HMeleeAttack", new eevee.config {
+                        displayName = "HMeleeAttack",
+                        KEYBOARD_code = (int)KeyCode.Mouse0,
+                        CONTROLLER_name = "X"
+                    }
+                },
+                {
+                    "HRangedAttack", new eevee.config {
+                        displayName = "HRangedAttack",
+                        KEYBOARD_code = (int)KeyCode.Mouse2,
+                        CONTROLLER_name = "B"
+                    }
+                },
+                {
+                    "HDefend", new eevee.config {
+                        displayName = "HDefend",
+                        KEYBOARD_code = (int)KeyCode.Q,
+                        CONTROLLER_name = "A"
+                    }
+                },
+                {
+                    "HOverdrive", new eevee.config {
+                        displayName = "HOverdrive",
+                        KEYBOARD_code = (int)KeyCode.E,
+                        CONTROLLER_name = "Y"
+                    }
+                },
+                {
+                    "HDash", new eevee.config {
+                        displayName = "HDash",
+                        KEYBOARD_code = (int)KeyCode.LeftShift,
+                        CONTROLLER_name = "Y"
                     }
                 },
                 // debug

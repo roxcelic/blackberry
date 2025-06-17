@@ -30,7 +30,7 @@ public class EnemySpawn : MonoBehaviour {
             if (players.Length != 0) {
                 if(world.transform.childCount - 1 >= players[0].GetComponent<PlayerController>().room + 1) world.transform.GetChild(players[0].GetComponent<PlayerController>().room + 1).gameObject.GetComponent<ImprovedGeneration>().gate.GetComponent<DoorBlock>().RemoveBlockAid();
 
-                players[0].GetComponent<PlayerController>().room+=1;
+                players[0].GetComponent<PlayerController>().increaseRoomIndex();
 
                 if (GetRoomCount() - 1< players[0].GetComponent<PlayerController>().room) {    
                     Time.timeScale = 1f;
@@ -65,7 +65,7 @@ public class EnemySpawn : MonoBehaviour {
 
             // add pointer to player
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-            if(players[0].GetComponent<PlayerController>().pointer) players[0].GetComponent<PlayerController>().SpawnPointer(newBean);
+            if(players[0].GetComponent<PlayerController>() != null && players[0].GetComponent<PlayerController>().pointer) players[0].GetComponent<PlayerController>().SpawnPointer(newBean);
 
             Bounds bounds = col.bounds;
 

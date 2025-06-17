@@ -67,6 +67,10 @@ MonoBehaviour:
   - {fileID: 6172258477605051330, guid: 7914740c013a99947be7661cd6b20017, type: 3}
   - {fileID: 6172258477605051330, guid: f208f827005a51647bc2c8132974cc1c, type: 3}
   - {fileID: 6172258477605051330, guid: b894725f9cbf0f646a05756d9139fea6, type: 3}
+  - {fileID: 6172258477605051330, guid: be757942012431f448e7c216c2b8433b, type: 3}
+  - {fileID: 6172258477605051330, guid: b4aa36766b88ed74bbafdeb5170c48c2, type: 3}
+  - {fileID: 6172258477605051330, guid: 1077fd413a02edc43870ab40172b2faa, type: 3}
+  - {fileID: 6172258477605051330, guid: 51beeb9e06ebb354daff36d3b784f7f2, type: 3}
   enemys:
   - {fileID: 2805807333211260156, guid: d1e356c664bd54f42b8da70ea59706b4, type: 3}
   - {fileID: 2805807333211260156, guid: 1c8e0d671abdff94eaec850493a8f82d, type: 3}
@@ -86,6 +90,7 @@ MonoBehaviour:
   - {fileID: 7238305402874162457, guid: 53bfce4764cfc8a429ce4f93819ad255, type: 3}
   - {fileID: 7238305402874162457, guid: eefe4ab2a9b06224d9cda14103a569b0, type: 3}
   - {fileID: 7238305402874162457, guid: 1bb9e24e5b95ed9498a24cb009360c45, type: 3}
+  - {fileID: 7238305402874162457, guid: 7fc5c8e2938003a4dac3f8e76505d6d7, type: 3}
   altfloors:
   - {fileID: 6045188658328113593, guid: 6826e1229eea87740af4d8c9d5b16c72, type: 3}
   altroofs:

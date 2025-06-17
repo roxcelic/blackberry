@@ -171,8 +171,11 @@ namespace commandGLI_Assets {
                 Useage = "forceend // forceend()",
 
                 action = (string input, string fullCommand) => {
+                    if (input == "") input = "null";
+                    
                     Time.timeScale = 1f;
                     GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("powerups").gameObject;
+                    PlayerPrefs.SetString("tmpForcePowerup", input);
                     loadingScreen.SetActive(true);
                 }
             },

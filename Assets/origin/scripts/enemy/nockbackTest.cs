@@ -23,7 +23,7 @@ public class nockbackTest : MonoBehaviour {
     public IEnumerator dealnockback(Collider collision) {
         yield return new WaitUntil(() => DamageDone);
 
-        if (collision.gameObject.CompareTag(targetTag) && (canExplode || !cooldown)){
+        if (collision != null && collision.gameObject.CompareTag(targetTag) && (canExplode || !cooldown)){
             canExplode = false;
             
             Vector3 explosionPoint = transform.position;

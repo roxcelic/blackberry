@@ -3390,7 +3390,7 @@ MonoBehaviour:
   BaseAttackRecoveryRate: 25
   BaseAttackStamina: 0
   BaseAttackCost: 40
-  baseAttackDamage: 10
+  baseAttackDamage: 2.5
   PlayerSpecificMeterMax: 200
   PlayerSpecificMeter: 200
   PlayerSpecificMeterRecoveryRate: 0.5
@@ -3398,7 +3398,7 @@ MonoBehaviour:
   PlayerSpecificAttackDamage: 0
   guarding: 0
   room: 0
-  maxHealth: 200
+  maxHealth: 150
   health: 0
   healModifier: 0.1
   GuardModifier: 2
@@ -3409,7 +3409,10 @@ MonoBehaviour:
   dash: 1
   dashing: 0
   dashForceModifier: 50
+  fallDamage: 0
+  voidLifeSteal: 0
   act: []
+  canUseAbility: 1
 --- !u!1 &7345569235883602713
 GameObject:
   m_ObjectHideFlags: 0

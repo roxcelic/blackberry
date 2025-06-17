@@ -16,8 +16,14 @@ public class KillBox : MonoBehaviour {
     }
 
     public void ManageDeath(string tag, Collider chosenOne){
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
         switch(tag){
             case "enemy":
+                if (players.Length != 0 && players[0].GetComponent<PlayerController>().voidLifeSteal) {
+                    players[0].GetComponent<PlayerController>().Heal(chosenOne.GetComponent<MainMenace>().maxHealth);
+                }
+
                 chosenOne.GetComponent<MainMenace>().Damage(enemyDamage);
 
                 break;

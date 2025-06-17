@@ -4376,16 +4376,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1202153326}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f05fdf2e7d7bd9919ace18809e4ab0fa, type: 3}
+  m_Script: {fileID: 11500000, guid: 16f279b4a219c654dbdfc0ed038ba0f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MenuRoot: {fileID: 0}
   unSelectable: 0
-  Name: Start
-  Description: Opens The Player Select Page
+  Name: 
+  Description: 
   smoothSpeed: 5
-  SelectedScale: {x: 2, y: 2, z: 1}
-  RotationRange: 2
+  SelectedScale: {x: 0, y: 0, z: 0}
+  RotationRange: 0
   UnselectedOpacity: 0.25
   rotationAngle: {x: 0, y: 0, z: 0}
   realRotation: {x: 0, y: 0, z: 0}
@@ -4393,8 +4393,10 @@ MonoBehaviour:
   scale: 1
   opacity: 1
   spriteRenderer: {fileID: 0}
-  NextMenu: {fileID: 2087774007}
-  Camera: {fileID: 331014465}
+  _Selected: 0
+  target: {fileID: 1904509109}
+  newMenu:
+  - {fileID: 7338740660455752755, guid: b4ddfc41c55567a4c81195913febd145, type: 3}
 --- !u!1 &1231972026
 GameObject:
   m_ObjectHideFlags: 0

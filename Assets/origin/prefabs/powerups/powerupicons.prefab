@@ -45,30 +45,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconNames:
-  - chestplate
-  - dontTouchMe
-  - funny_leftovers_potion
-  - hard_mode
-  - heart
-  - superUltraGambling
-  - place_to_be
-  - potion
-  - skull
-  - speedPotion
-  - thresh
   - girl power
   - marmot power
+  - Collide With Me
+  - superUltraGambling
+  - Greater Sword
+  - Greatest Sword
+  - Fight and Flight
+  - Cowardice
+  - Spirit Crusher
+  - Thick Skin
+  - Places to be
+  - Hard-ish Mode
+  - chestplate
+  - speedPotion
+  - dontTouchMe
+  - Hard Mode
+  - you learn to jump
+  - silly
+  - compass
   iconIcons:
-  - {fileID: 21300000, guid: 32c0bb89ab9ecfe4fb53579554a10361, type: 3}
-  - {fileID: 21300000, guid: a136a2a65ed0b2747a7489c96d2d77f5, type: 3}
-  - {fileID: 21300000, guid: ab0e7604dbd967446b76525ad0bfa648, type: 3}
-  - {fileID: 21300000, guid: 905473d48ba4580468506a47299a0284, type: 3}
-  - {fileID: 21300000, guid: e5db1680fcc9dc54e89712d958bb8eb4, type: 3}
-  - {fileID: 21300000, guid: 5aa5006d8f407f9489b93445e8e921e9, type: 3}
-  - {fileID: 21300000, guid: bdade8ed10243f44ab63049b34a2e949, type: 3}
-  - {fileID: 21300000, guid: e516e2b791631eb428180bd5a43f6598, type: 3}
-  - {fileID: 21300000, guid: 57567921caed6d34f9aa4a948441cbfc, type: 3}
-  - {fileID: 21300000, guid: f78654388545e274983da963a6a14a5c, type: 3}
-  - {fileID: 21300000, guid: b2cef78c58ab78a4aa2a2f66cfc35e63, type: 3}
   - {fileID: 21300000, guid: c0cd9cef2d45bd246a0573b15d198e97, type: 3}
   - {fileID: 21300000, guid: 580670efabc54a34bbc8454cce96534b, type: 3}
+  - {fileID: 21300000, guid: f16fbec651de35442b6f2769be6c6ce2, type: 3}
+  - {fileID: 21300000, guid: 5aa5006d8f407f9489b93445e8e921e9, type: 3}
+  - {fileID: 21300000, guid: a2e23051999e57144bea4e7b7b27bb42, type: 3}
+  - {fileID: 21300000, guid: 9e3bff01e34116746a0dd5a99b5e261e, type: 3}
+  - {fileID: 21300000, guid: 72c964608f760b14692875813105af15, type: 3}
+  - {fileID: 21300000, guid: d05b219433e1771419fde7339690a28e, type: 3}
+  - {fileID: 21300000, guid: 57567921caed6d34f9aa4a948441cbfc, type: 3}
+  - {fileID: 21300000, guid: e8a2a094eae33604f866fcb0cb48c786, type: 3}
+  - {fileID: 21300000, guid: bdade8ed10243f44ab63049b34a2e949, type: 3}
+  - {fileID: 21300000, guid: 905473d48ba4580468506a47299a0284, type: 3}
+  - {fileID: 21300000, guid: 32c0bb89ab9ecfe4fb53579554a10361, type: 3}
+  - {fileID: 21300000, guid: f78654388545e274983da963a6a14a5c, type: 3}
+  - {fileID: 21300000, guid: a136a2a65ed0b2747a7489c96d2d77f5, type: 3}
+  - {fileID: 21300000, guid: 905473d48ba4580468506a47299a0284, type: 3}
+  - {fileID: 21300000, guid: 1a831f614bfe021448cdb81834469b56, type: 3}
+  - {fileID: 21300000, guid: 564a9f3fe8d9e784aab01aa7ebc20958, type: 3}
+  - {fileID: 21300000, guid: 96af6aee46ebd194cb19ce4398fc5508, type: 3}

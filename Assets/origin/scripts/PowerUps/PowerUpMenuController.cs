@@ -13,6 +13,7 @@ public class PowerUpMenuController : MonoBehaviour {
     public PowerUpIcons icons;
     public bool changingFloor = false;
     public bool hasChosen = false;
+    public bool canChoose = false;
 
     void Update() {
         selectedOption = eevee.input.CheckAxis("right", "left");
@@ -26,7 +27,7 @@ public class PowerUpMenuController : MonoBehaviour {
             PrevSelectedOption = selectedOption;
         }
 
-        if (eevee.input.Grab("MenuSelect") && !hasChosen && powerUpOptions[selectedOption].GetComponent<PowerUp>().Active) {
+        if (eevee.input.Grab("MenuSelect") && !hasChosen && powerUpOptions[selectedOption].GetComponent<PowerUp>().Active && canChoose) {
             PlayerPrefs.SetString("powerups", PlayerPrefs.GetString("powerups", "") + $",{powerUpOptions[selectedOption].GetComponent<PowerUp>().powerupName}");
             hasChosen = true;
             StartCoroutine(loadNextFloor());
@@ -44,6 +45,9 @@ public class PowerUpMenuController : MonoBehaviour {
 
     void OnEnable() {
         Debug.Log("loading power ups");
+        
+        canChoose = false;
+        StartCoroutine(canChooseActive(0.25f));
         
         Debug.Log(PlayerPrefs.GetString("powerups", ""));
         foreach (string key in powerups.full.truePowerups().Keys)
@@ -73,12 +77,22 @@ public class PowerUpMenuController : MonoBehaviour {
         for (int i = 1; i <= 3; i++) {
             if (powerupKeys.Count == 0) break;
 
-            powerups.PowerUp currentPu;
-            string PUkey = powerupKeys[UnityEngine.Random.Range(0, powerupKeys.Count - 1)];
-            currentPu = powerups.full.truePowerups()[PUkey];
-            currentPu.Name = PUkey;
-            SelectedPowerUps.Add(currentPu);
-            powerupKeys.Remove(PUkey);
+            if (i == 1 && (PlayerPrefs.GetString("tmpForcePowerup", "null") != "null" || PlayerPrefs.GetString("tmpForcePowerup", "null") == "")) {
+                powerups.PowerUp currentPu;
+                string PUkey = PlayerPrefs.GetString("tmpForcePowerup", "");
+                currentPu = powerups.full.truePowerups()[PUkey];
+                currentPu.Name = PUkey;
+                SelectedPowerUps.Add(currentPu);
+                powerupKeys.Remove(PUkey);
+                PlayerPrefs.SetString("tmpForcePowerup", "null");
+            } else {
+                powerups.PowerUp currentPu;
+                string PUkey = powerupKeys[UnityEngine.Random.Range(0, powerupKeys.Count - 1)];
+                currentPu = powerups.full.truePowerups()[PUkey];
+                currentPu.Name = PUkey;
+                SelectedPowerUps.Add(currentPu);
+                powerupKeys.Remove(PUkey);
+            }
         }
 
         switch (SelectedPowerUps.Count) {
@@ -143,5 +157,10 @@ public class PowerUpMenuController : MonoBehaviour {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);
         
+    }
+
+    public IEnumerator canChooseActive(float delay) {
+        yield return new WaitForSeconds(delay);
+        canChoose = true;
     }
 }

@@ -28,7 +28,6 @@ public class pointer : MonoBehaviour {
         float C = 0;
 
         float zangel = 0;
-        float scaleModifier = 1f;
 
         Vector2 tL = new Vector2();
         Vector2 pL = new Vector2();
@@ -55,10 +54,6 @@ public class pointer : MonoBehaviour {
 
                 break;
             case "Dylan":
-                scaleModifier = (Mathf.Abs(player.transform.position.y - Target.transform.position.y));
-                Debug.Log(scaleModifier);
-                scaleModifier = Mathf.Clamp(scaleModifier, 0.4f, 1f);
-                        
                 // positions
                 tL = new Vector2(Target.transform.position.x, Target.transform.position.z);
                 pL = new(0, 1);
@@ -76,8 +71,6 @@ public class pointer : MonoBehaviour {
                 Mathf.Rad2Deg;
 
                 if (tL.x > pL.x ) zangel = 360 - zangel;
-
-                transform.localScale = defaultScale * scaleModifier;
 
                 break;
 

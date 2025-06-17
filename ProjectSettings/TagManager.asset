@@ -6,6 +6,9 @@ TagManager:
   tags:
   - commands
   - enemy
+  - Enemy
+  - ArcherArrow
+  - floor
   layers:
   - Default
   - TransparentFX

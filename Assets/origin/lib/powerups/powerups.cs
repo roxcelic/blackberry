@@ -42,6 +42,22 @@ namespace powerups {
 
                     controller.dash = true;
                 }
+            },
+            ["you learn to jump"] = new powerups.PowerUp{
+                Description = "enables a jump for the player",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    controller.canJump = true;
+                }
+            },
+            ["compass"] = new powerups.PowerUp{
+                Description = "allows the player to use pointers",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    controller.pointer = true;
+                }
             }
         };
 
@@ -173,7 +189,7 @@ namespace powerups {
                     controller.speed += 66f;
                 }
             },
-            ["heart"] = new powerups.PowerUp{
+            ["  "] = new powerups.PowerUp{
                 Description = "+25 max health",
                 action = (This) => {
                     Base(This);
@@ -204,6 +220,16 @@ namespace powerups {
                     Base(This);
                     PlayerController controller = This.GetComponent<PlayerController>();
                     controller.maxHealth = 1f;
+                }
+            },
+            ["silly"] = new powerups.PowerUp{
+                Description = "sets speed to 1000, allows you to dash and jump",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    controller.speed = 1000f;
+                    controller.dash = true;
+                    controller.canJump = true;
                 }
             },
         };
