@@ -21,27 +21,8 @@ public class EnemySpawn : MonoBehaviour {
             StartCoroutine(SpawnCreatures());
 
         world = transform.parent.parent.gameObject; 
-    }
 
-    void Update() {
-        if (GameObject.FindGameObjectsWithTag("enemy").Length == 0 && activated){
-            GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
-            if (players.Length != 0) {
-                if(world.transform.childCount - 1 >= players[0].GetComponent<PlayerController>().room + 1) world.transform.GetChild(players[0].GetComponent<PlayerController>().room + 1).gameObject.GetComponent<ImprovedGeneration>().gate.GetComponent<DoorBlock>().RemoveBlockAid();
-
-                players[0].GetComponent<PlayerController>().increaseRoomIndex();
-
-                if (GetRoomCount() - 1< players[0].GetComponent<PlayerController>().room) {    
-                    Time.timeScale = 1f;
-                    GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("powerups").gameObject;
-                    loadingScreen.SetActive(true);
-                } else {
-                    Destroy(transform.gameObject);
-                    transform.parent.parent.GetChild(transform.parent.GetSiblingIndex() + 1).Find("enemys").GetComponent<EnemySpawn>().DoTheRoar();
-                }
-            }
-        }
+        StartCoroutine(waitforallenemystodie());
     }
 
     public int GetRoomCount() {
@@ -75,5 +56,26 @@ public class EnemySpawn : MonoBehaviour {
         }
 
         activated = true;
+    }
+
+    public IEnumerator waitforallenemystodie() {
+        yield return new WaitUntil(() => GameObject.FindGameObjectsWithTag("enemy").Length == 0 && activated);
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        if (players.Length != 0) {
+            if(world.transform.childCount - 1 >= players[0].GetComponent<PlayerController>().room + 1) world.transform.GetChild(players[0].GetComponent<PlayerController>().room + 1).gameObject.GetComponent<ImprovedGeneration>().gate.GetComponent<DoorBlock>().RemoveBlockAid();
+
+            players[0].GetComponent<PlayerController>().increaseRoomIndex();
+
+            if (GetRoomCount() - 1< players[0].GetComponent<PlayerController>().room) {    
+                Time.timeScale = 1f;
+                GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("powerups").gameObject;
+                loadingScreen.SetActive(true);
+            } else {
+                Destroy(transform.gameObject);
+                transform.parent.parent.GetChild(transform.parent.GetSiblingIndex() + 1).Find("enemys").GetComponent<EnemySpawn>().DoTheRoar();
+            }
+        }
     }
 }

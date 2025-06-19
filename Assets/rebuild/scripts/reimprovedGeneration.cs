@@ -4,9 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class ImprovedGeneration : MonoBehaviour {
+public class reimprovedGeneration : MonoBehaviour {
     [Header("Data")]
-    public bool experement;
     public bool start;
     public bool generated;
     public int WorldType;
@@ -19,12 +18,10 @@ public class ImprovedGeneration : MonoBehaviour {
 
     [Header("MeshData")]
     [SerializeField] public List<GameObject> floors = new List<GameObject>();
-    [SerializeField] public List<GameObject> roofs = new List<GameObject>();
-    [SerializeField] public List<GameObject> walls = new List<GameObject>();
     [SerializeField] public List<GameObject> wallsansdoor = new List<GameObject>();
     [SerializeField] public List<GameObject> decors = new List<GameObject>();
     [SerializeField] public List<GameObject> enemys = new List<GameObject>();
-    [SerializeField] public GameObject theWatcher;
+    [SerializeField] public GameObject EnemySpawner;
 
     [Header("typeData")]
     public float width;
@@ -37,21 +34,18 @@ public class ImprovedGeneration : MonoBehaviour {
     public bool StartRoom;
     public bool EndRoom;
     
+    [SerializeField]
     public class roomConfig {
         public static GameObject floor;
-        public static GameObject watcher;
+        public static GameObject enemys;
         public static GameObject player;
         public static GameObject roof;
 
-        public static class walls {
-            public static GameObject North;
-            public static GameObject East;
-            public static GameObject South;
-            public static GameObject West;
-        }
+        [SerializeField]
+        public static GameObject West;
 
         public static List<GameObject> Decorations;
-        public static List<GameObject> Enemys;
+        public static List<GameObject> enemies;
     }
 
     public GameObject gate;
@@ -59,7 +53,16 @@ public class ImprovedGeneration : MonoBehaviour {
     [Header("player")]
     public GameObject[] player;
     
-    public void notStart() {
+    [Header("alt")]
+    public GameObject[] altPlayer;
+    [SerializeField] public List<GameObject> altfloors = new List<GameObject>();
+    [SerializeField] public List<GameObject> altroofs = new List<GameObject>();
+    [SerializeField] public List<GameObject> altwallsansdoor = new List<GameObject>();
+    [SerializeField] public List<GameObject> altdecors = new List<GameObject>();
+    [SerializeField] public List<GameObject> altenemys = new List<GameObject>();
+
+
+    void Start() {
         // get floor and seed
         seed = PlayerPrefs.HasKey("seed") ? PlayerPrefs.GetString("seed") : seed;
         floor = PlayerPrefs.HasKey("floor") ? PlayerPrefs.GetInt("floor") : floor;
@@ -68,7 +71,18 @@ public class ImprovedGeneration : MonoBehaviour {
         seed = generation.seed.Check(seed);
         trueSeed = generation.seed.Convert(seed);
 
+        // world type
+        WorldType = PlayerPrefs.HasKey("worldType") ? PlayerPrefs.GetInt("worldType") : WorldType;
+        if (WorldType == 1) {
+            player = altPlayer;
+            floors = altfloors;
+            wallsansdoor = altwallsansdoor;
+            decors = altdecors;
+            enemys = altenemys;
+        }
+    
         // starting
+        if (PlayerPrefs.GetInt("floor", 0) % 5 != 0 || PlayerPrefs.GetInt("floor", 0) == 0)
         StartCoroutine(startGen());
     }
 
@@ -170,45 +184,33 @@ public class ImprovedGeneration : MonoBehaviour {
 
         // spawn floor
         roomConfig.floor = SpawnObject(floors, 1, new Vector3(90f, 0f, 0f), new Vector3(), "floor");
-        roomConfig.watcher = SpawnSingleObject(theWatcher, 1, new Vector3(0f, 0f, 0f), new Vector3(), "watcher");
 
         // spawn walls
-            if (!experement){
-                roomConfig.walls.North = SpawnObject(walls, 1, new Vector3(90f, 0f, 90f), new Vector3(0, tmpheight, 0), "north");
-                roomConfig.walls.South = SpawnObject(walls, 1, new Vector3(90f, 0f, 270f), new Vector3(0, tmpheight, 0), "south");
-            }
-
-            // variable walls
-            if (EndRoom && !experement) {
-                roomConfig.walls.East = SpawnObject(walls, 1, new Vector3(-90f, 0f, 180f), new Vector3(tmpwidth, 0, 0), "east");
-            }
-            
             if (StartRoom){
-
-                if (!experement) roomConfig.walls.West = SpawnObject(walls, 1, new Vector3(-90f, 0f, 0f), new Vector3(-tmpwidth, 0, 0), "west");
-
                 roomConfig.player = Instantiate(player[PlayerPrefs.GetInt("playerType", 0)], transform);
                 roomConfig.player.transform.position = (roomConfig.floor.transform.position + new Vector3(0, 1, 0));
 
                 transform.parent.GetComponent<worldGen>().Player = roomConfig.player;
             } else {
-                roomConfig.walls.West = SpawnObject(wallsansdoor, 1, new Vector3(-90f, 0f, 0f), new Vector3(0, 0, 0), "west");
+                roomConfig.West = SpawnObject(wallsansdoor, 1, new Vector3(-90f, 0f, 0f), new Vector3(0, 0, 0), "west");
             } 
 
-            gate = roomConfig.walls.West;
+            gate = roomConfig.West;
 
-        // spawn roof
-        if (!experement) roomConfig.roof = SpawnObject(roofs, 1, new Vector3(90f, 0f, 0f), new Vector3(0, tmpheight, 0), "roof");
-        
         // spawn Decor
         SpawnRandom(decors);
+        SpawnRandom(enemys);
 
         // finish
 
         if (roomConfig.player)
             roomConfig.player.SetActive(true);
 
-        roomConfig.watcher.SetActive(true);
+        roomConfig.enemys.SetActive(true);
+        roomConfig.enemys.GetComponent<EnemySpawn>().enemys = ListRandom(enemys);
+
+        if (StartRoom)
+            roomConfig.enemys.GetComponent<EnemySpawn>().Forceactivated = true;
 
         generated = true;
     }

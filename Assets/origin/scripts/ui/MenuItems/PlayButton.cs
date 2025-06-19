@@ -52,7 +52,7 @@ public class PlayButton : MenuItems {
 
         PlayerPrefs.SetString("seed", seed);
         Debug.Log($"new seed: {seed}");
-        SceneManager.LoadScene("Level");
+        SceneManager.LoadScene("betterWorld");
     }
 
     public string GenerateRandomSeed() {
