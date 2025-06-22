@@ -123,16 +123,11 @@ public class PlayerController : MonoBehaviour {
         foreach (string key in powerups.full.truePowerups().Keys) Debug.Log(key);
         
         foreach (string powerup in powerupsHOLD) {
-            Debug.Log(powerup);
-
             if (powerup != ""){
                 act.Add(powerup);
                 
-                if (powerups.full.truePowerups().ContainsKey(powerup)) {
-                    Debug.Log($"applying {powerup}");
+                if (powerups.full.truePowerups().ContainsKey(powerup))
                     powerups.full.truePowerups()[powerup].action(this);
-                    Debug.Log($"applied {powerup}");
-                }
             }
         }
     }

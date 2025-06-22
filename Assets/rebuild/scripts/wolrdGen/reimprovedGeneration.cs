@@ -18,50 +18,30 @@ public class reimprovedGeneration : MonoBehaviour {
 
     [Header("MeshData")]
     [SerializeField] public List<GameObject> floors = new List<GameObject>();
-    [SerializeField] public List<GameObject> wallsansdoor = new List<GameObject>();
     [SerializeField] public List<GameObject> decors = new List<GameObject>();
     [SerializeField] public List<GameObject> enemys = new List<GameObject>();
-    [SerializeField] public GameObject EnemySpawner;
+    [SerializeField] public GameObject the_watcher;
 
     [Header("typeData")]
-    public float width;
-    public float height;
+    public float verticalOffset;
     public float scale;
-    public float worldscale;
     public float safeborder;
-
-    [Header("config")]
     public bool StartRoom;
-    public bool EndRoom;
     
     [SerializeField]
     public class roomConfig {
         public static GameObject floor;
         public static GameObject enemys;
         public static GameObject player;
-        public static GameObject roof;
-
-        [SerializeField]
-        public static GameObject West;
+        public static GameObject the_watcher;
 
         public static List<GameObject> Decorations;
         public static List<GameObject> enemies;
     }
 
-    public GameObject gate;
-
     [Header("player")]
     public GameObject[] player;
     
-    [Header("alt")]
-    public GameObject[] altPlayer;
-    [SerializeField] public List<GameObject> altfloors = new List<GameObject>();
-    [SerializeField] public List<GameObject> altroofs = new List<GameObject>();
-    [SerializeField] public List<GameObject> altwallsansdoor = new List<GameObject>();
-    [SerializeField] public List<GameObject> altdecors = new List<GameObject>();
-    [SerializeField] public List<GameObject> altenemys = new List<GameObject>();
-
-
     void Start() {
         // get floor and seed
         seed = PlayerPrefs.HasKey("seed") ? PlayerPrefs.GetString("seed") : seed;
@@ -71,16 +51,6 @@ public class reimprovedGeneration : MonoBehaviour {
         seed = generation.seed.Check(seed);
         trueSeed = generation.seed.Convert(seed);
 
-        // world type
-        WorldType = PlayerPrefs.HasKey("worldType") ? PlayerPrefs.GetInt("worldType") : WorldType;
-        if (WorldType == 1) {
-            player = altPlayer;
-            floors = altfloors;
-            wallsansdoor = altwallsansdoor;
-            decors = altdecors;
-            enemys = altenemys;
-        }
-    
         // starting
         if (PlayerPrefs.GetInt("floor", 0) % 5 != 0 || PlayerPrefs.GetInt("floor", 0) == 0)
         StartCoroutine(startGen());
@@ -114,6 +84,8 @@ public class reimprovedGeneration : MonoBehaviour {
         ChosenObject.transform.parent = transform; 
         if (localPosition != Vector3.zero)
             ChosenObject.transform.localPosition += localPosition;
+
+        if (name == "") name = ChosenObject.name;
         ChosenObject.name = name;
 
         return ChosenObject;
@@ -127,7 +99,7 @@ public class reimprovedGeneration : MonoBehaviour {
         return objectsToSpawn[indexing];
     }
 
-    public void SpawnRandom(List<GameObject> beans) {
+    public void SpawnRandom(List<GameObject> beans, string name = "") {
         string stringseed = getTrueSeed().ToString();
 
         int index = (int)generation.utils.charToFloat(stringseed[1]);
@@ -136,7 +108,7 @@ public class reimprovedGeneration : MonoBehaviour {
         int loop = (int)val/2;
     
         while (loop >= 0) {
-            GameObject newBean = SpawnObject(beans, loop );
+            GameObject newBean = SpawnObject(beans, loop);
 
             Bounds bounds = roomConfig.floor.GetComponent<Collider>().bounds;
                 bounds.min *= scale;
@@ -144,11 +116,14 @@ public class reimprovedGeneration : MonoBehaviour {
 
             newBean.transform.position = new Vector3(
                 UnityEngine.Random.Range(bounds.min.x + safeborder, bounds.max.x - safeborder),
-                height + newBean.transform.position.y,
-                UnityEngine.Random.Range(bounds.min.y + safeborder, bounds.max.y - safeborder)
+                verticalOffset + newBean.transform.position.y,
+                UnityEngine.Random.Range(bounds.min.z + safeborder, bounds.max.z - safeborder)
             );
 
-            newBean.transform.eulerAngles = new Vector3(-90f, 0, UnityEngine.Random.Range(0, 360));
+            Debug.Log(bounds);
+            Debug.Log(newBean.transform.position);
+
+            newBean.name = $"{name}-{loop}-{newBean.name}";
 
             loop--;
         }
@@ -178,39 +153,29 @@ public class reimprovedGeneration : MonoBehaviour {
         // wait until can start generating
         yield return new WaitUntil(() => start);
 
-        // initalise variables
-        float tmpheight = height * scale;
-        float tmpwidth = width * scale;
-
         // spawn floor
         roomConfig.floor = SpawnObject(floors, 1, new Vector3(90f, 0f, 0f), new Vector3(), "floor");
 
-        // spawn walls
+        // spawn player
             if (StartRoom){
                 roomConfig.player = Instantiate(player[PlayerPrefs.GetInt("playerType", 0)], transform);
                 roomConfig.player.transform.position = (roomConfig.floor.transform.position + new Vector3(0, 1, 0));
 
-                transform.parent.GetComponent<worldGen>().Player = roomConfig.player;
-            } else {
-                roomConfig.West = SpawnObject(wallsansdoor, 1, new Vector3(-90f, 0f, 0f), new Vector3(0, 0, 0), "west");
-            } 
-
-            gate = roomConfig.West;
+                transform.parent.GetComponent<bestWorldGen>().Player = roomConfig.player;
+            }
 
         // spawn Decor
-        SpawnRandom(decors);
-        SpawnRandom(enemys);
+        SpawnRandom(decors, "decor");
+        SpawnRandom(enemys, "enemy");
+
+        // spawn the watcher
+        roomConfig.the_watcher = Instantiate(the_watcher, transform);
+        roomConfig.the_watcher.name = "the watcher";
 
         // finish
 
         if (roomConfig.player)
             roomConfig.player.SetActive(true);
-
-        roomConfig.enemys.SetActive(true);
-        roomConfig.enemys.GetComponent<EnemySpawn>().enemys = ListRandom(enemys);
-
-        if (StartRoom)
-            roomConfig.enemys.GetComponent<EnemySpawn>().Forceactivated = true;
 
         generated = true;
     }

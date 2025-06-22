@@ -21,10 +21,10 @@ public class KillBox : MonoBehaviour {
         switch(tag){
             case "enemy":
                 if (players.Length != 0 && players[0].GetComponent<PlayerController>().voidLifeSteal) {
-                    players[0].GetComponent<PlayerController>().Heal(chosenOne.GetComponent<MainMenace>().maxHealth);
+                    players[0].GetComponent<PlayerController>().Heal(chosenOne.GetComponent<enemyRebuild>().maxHealth);
                 }
 
-                chosenOne.GetComponent<MainMenace>().Damage(enemyDamage);
+                chosenOne.GetComponent<enemyRebuild>().Damage(enemyDamage);
 
                 break;
             case "Player":

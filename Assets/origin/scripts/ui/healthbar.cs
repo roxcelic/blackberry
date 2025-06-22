@@ -3,7 +3,7 @@ using UnityEngine;
 public class healthbar : MonoBehaviour {
     [Header("controllers")]
     public PlayerController player;
-    public MainMenace menace;
+    public enemyRebuild menace;
 
     [Header("type")]
     public BarType type;

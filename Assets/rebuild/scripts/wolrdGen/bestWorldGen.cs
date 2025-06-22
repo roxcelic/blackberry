@@ -7,14 +7,16 @@ using System.Collections.Generic;
 public class bestWorldGen : MonoBehaviour {
     public GameObject room;
     public GameObject Player;
-    public bool experement;
     public GameObject loadingMenu;
     public GameObject KillBox;
+    public Vector3 killBoxOffset;
     public Vector3 worldTransform;
     public Vector3 worldRotation;
     public List<GameObject> rooms;
     public int roomcount = 1;
     
+    public bool Continue;
+
     private int count = 0;
 
     private reimprovedGeneration vroomvroom;
@@ -33,18 +35,8 @@ public class bestWorldGen : MonoBehaviour {
     public List<Dictionary<string, List<Vector3>>> worldPositioningDirections = new List<Dictionary<string, List<Vector3>>>{
         {
             new Dictionary<string, List<Vector3>> {
-                ["Right"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(25, 0, 0) },
-                ["Forward"] = new List<Vector3> { new Vector3(0, -90, 0), new Vector3(0, 0, 25) },
-            }
-        },
-        {
-            new Dictionary<string, List<Vector3>> {
-                ["Right"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(25, 0, 0) }
-            }
-        },
-        {
-            new Dictionary<string, List<Vector3>> {
-                ["Forward"] = new List<Vector3> { new Vector3(0, -90, 0), new Vector3(0, 0, 25) },
+                ["Right"] = new List<Vector3> { new Vector3(0, 0, 0), new Vector3(16, 0, 0) },
+                ["Forward"] = new List<Vector3> { new Vector3(0, -90, 0), new Vector3(0, 0, 16) },
             }
         }
     };
@@ -65,17 +57,16 @@ public class bestWorldGen : MonoBehaviour {
             rooms.Add(SpawnRoom(i.ToString()));
 
         // spawn end room
-        rooms.Add(SpawnRoom("end", false, true));
+        rooms.Add(SpawnRoom("end", false));
 
         StartCoroutine(startGen());
     }
 
-    public GameObject SpawnRoom(string name = "", bool StartRoom = false, bool EndRoom = false){
+    public GameObject SpawnRoom(string name = "", bool StartRoom = false){
         GameObject newRoom = Instantiate(room, transform);
         newRoom.transform.position = new Vector3(0, 0, 0);
 
         newRoom.GetComponent<reimprovedGeneration>().StartRoom = StartRoom;
-        newRoom.GetComponent<reimprovedGeneration>().EndRoom = EndRoom;
 
         newRoom.name = name;
 
@@ -96,29 +87,7 @@ public class bestWorldGen : MonoBehaviour {
         count = 0;
         Dictionary<string, List<Vector3>> tmpPosition = worldPositioningDirections[generation.utils.randomIndex(worldPositioningDirections.Count, 4, getTrueSeed(count))];
 
-        foreach (GameObject room in rooms){
-            List<Vector3> directionData = tmpPosition[new List<string> (tmpPosition.Keys) [generation.utils.randomIndex(tmpPosition.Keys.Count, 4, getTrueSeed(count))]];
-
-            while (usedPositions.Contains(directionData[1]) || usedPositions.Contains(worldTransform + directionData[1])) {
-                directionData = tmpPosition[new List<string> (tmpPosition.Keys) [generation.utils.randomIndex(tmpPosition.Keys.Count, 4, getTrueSeed(count))]];
-                count++;
-            }
-
-            room.transform.position = worldTransform;
-            
-            room.transform.rotation =  Quaternion.Euler(worldRotation);
-            worldRotation = directionData[0];
-            worldTransform += directionData[1];
-
-            usedPositions.Add(directionData[0]);
-
-            count++;
-        }
-
         yield return new WaitForSeconds(1f);
-
-        KillBox.transform.localScale = new Vector3(KillBox.transform.localScale.x + (Mathf.Abs(worldTransform.x) / 50), KillBox.transform.localScale.y, KillBox.transform.localScale.z + (Mathf.Abs(worldTransform.z) / 50));
-        KillBox.transform.position = new Vector3(KillBox.transform.position.x + (Mathf.Abs(worldTransform.x) / 2), KillBox.transform.position.y, KillBox.transform.position.z + (Mathf.Abs(worldTransform.z) / 2));
 
         loadingMenu.GetComponent<Animator>().Play("loadingScreenExit");
         
@@ -126,6 +95,42 @@ public class bestWorldGen : MonoBehaviour {
             child.GetComponent<KillBox>().started = true;
 
         PlayerPrefs.SetString("generated", "true");
+
+        Continue = true;
+
+        foreach (GameObject room in rooms) {
+            yield return new WaitUntil(() => Continue);
+
+            room.GetComponent<reimprovedGeneration>().start = true;
+            Continue = false;
+
+            yield return 0;
+
+            // seperating ig idajsodijaosdjoaijsd
+
+            List<Vector3> directionData = tmpPosition[new List<string> (tmpPosition.Keys) [generation.utils.randomIndex(tmpPosition.Keys.Count, 4, getTrueSeed(count))]];
+
+            while (usedPositions.Contains(directionData[1]) || usedPositions.Contains(worldTransform + directionData[1])) {
+                directionData = tmpPosition[new List<string> (tmpPosition.Keys) [generation.utils.randomIndex(tmpPosition.Keys.Count, 4, getTrueSeed(count))]];
+                count++;
+            }
+
+            room.transform.position = new Vector3(worldTransform.x, room.GetComponent<roomRise>().StartValue, worldTransform.z);
+            
+            room.transform.rotation =  Quaternion.Euler(directionData[0]);
+            worldTransform += directionData[1];
+
+            usedPositions.Add(directionData[0]);
+
+            count++;
+
+            // update kill box size
+            KillBox.transform.localScale += new Vector3(0.5f, 0.5f, 0.5f);
+            KillBox.transform.position += killBoxOffset;
+
+            // rise
+            room.GetComponent<roomRise>().start = true;
+        } 
     }
 
     // a function to get the true seed

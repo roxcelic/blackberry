@@ -31,7 +31,7 @@ public class attackrest : MonoBehaviour {
                 
                 break;
             case "enemy":
-                target.GetComponent<MainMenace>().Damage(damage);
+                target.GetComponent<enemyRebuild>().Damage(damage);
                 transform.parent.GetComponent<PlayerController>().Heal(damage);
                 nock.DamageDone = true;
 
